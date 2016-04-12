@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://images/tiles.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[node name="Node" type="Node"]
+
+[node name="left_edge" type="Sprite" parent="."]
+
+texture = ExtResource( 1 )
+centered = false
+region = true
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="left_edge"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 8, 8 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left_edge/StaticBody2D"]
+
+transform/pos = Vector2( 8, 8 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="platform" type="Sprite" parent="."]
+
+transform/pos = Vector2( 20, 0 )
+texture = ExtResource( 1 )
+centered = false
+region = true
+region_rect = Rect2( 16, 0, 16, 16 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="platform"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 8, 8 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platform/StaticBody2D"]
+
+transform/pos = Vector2( 8, 8 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="right_edge" type="Sprite" parent="."]
+
+transform/pos = Vector2( 40, 0 )
+texture = ExtResource( 1 )
+centered = false
+flip_h = true
+region = true
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="right_edge"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 8, 8 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right_edge/StaticBody2D"]
+
+transform/pos = Vector2( 8, 8 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+
