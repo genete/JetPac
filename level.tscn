@@ -25,7 +25,7 @@ tile_data = IntArray( 327680, 0, 327681, 1, 327682, 1, 327683, 1, 327684, 1, 327
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 67, 26 )
+transform/pos = Vector2( 52.4251, 10.9727 )
 collision/margin = 0.08
 
 

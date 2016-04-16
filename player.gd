@@ -25,10 +25,14 @@ const SLIDE_STOP_MIN_TRAVEL = 1.0 # One pixel
 var velocity = Vector2()
 var on_air_time = 100
 var jumping = false
+var shooting=false
 
 var prev_jump_pressed = false
 var anim=""
 var siding_left=false
+
+var laser = preload("res://laser.tscn")
+
 
 func _ready():
 	set_fixed_process(true)
@@ -42,6 +46,7 @@ func _fixed_process(delta):
 	var walk_left = Input.is_action_pressed("move_left")
 	var walk_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")
+	var shot=Input.is_action_pressed("shot")
 	
 	var stop = true
 	
@@ -83,4 +88,16 @@ func _fixed_process(delta):
 	if (new_anim != anim):
 		anim = new_anim
 		get_node("Sprite/anim").play(anim)
+	
+	if shot and not shooting:
+		var li=laser.instance()
+		var pos = get_pos()+get_node("Sprite/laser_pos").get_pos()
+		if(siding_left):
+			li.invert_direction()
+		li.set_starting_pos(pos)
+		get_parent().add_child(li)
+	
+	shooting=shot
+		
+		
 

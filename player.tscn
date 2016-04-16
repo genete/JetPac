@@ -67,4 +67,8 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
+[node name="laser_pos" type="Position2D" parent="Sprite"]
+
+transform/pos = Vector2( 8.16913, -1.44936 )
+
 
