@@ -21,11 +21,10 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 327680, 0, 327681, 1, 327682, 1, 327683, 1, 327684, 1, 327685, 1, 327686, 1, 327687, 2 )
+tile_data = IntArray( 196619, 1, 196620, 1, 262155, 1, 262156, 1, 327680, 0, 327681, 1, 327682, 1, 327683, 1, 327684, 1, 327685, 1, 327686, 1, 327687, 2, 589832, 0, 589833, 1, 589834, 1, 589835, 1, 589836, 1, 589837, 1, 589838, 1, 589839, 1, 589840, 1, 589841, 2 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 52.4251, 10.9727 )
-collision/margin = 0.08
 
 

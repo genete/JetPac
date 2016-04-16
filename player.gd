@@ -25,7 +25,8 @@ const SLIDE_STOP_MIN_TRAVEL = 1.0 # One pixel
 var velocity = Vector2()
 var on_air_time = 100
 var jumping = false
-var shooting=false
+var shooting = false
+var jet_force = 650.0
 
 var prev_jump_pressed = false
 var anim=""
@@ -45,7 +46,7 @@ func _fixed_process(delta):
 	
 	var walk_left = Input.is_action_pressed("move_left")
 	var walk_right = Input.is_action_pressed("move_right")
-	var jump = Input.is_action_pressed("jump")
+	var jet = Input.is_action_pressed("jet")
 	var shot=Input.is_action_pressed("shot")
 	
 	var stop = true
@@ -61,8 +62,10 @@ func _fixed_process(delta):
 	else:
 		velocity.x=0
 		new_anim="idle"
-	
-	# Integrate forces to velocity
+	if (jet):
+		force=Vector2(0,-jet_force)
+
+		# Integrate forces to velocity
 	velocity += force*delta
 	
 	# Integrate velocity into motion and move
@@ -91,11 +94,14 @@ func _fixed_process(delta):
 	
 	if shot and not shooting:
 		var li=laser.instance()
-		var pos = get_pos()+get_node("Sprite/laser_pos").get_pos()
+		var lpos=get_node("Sprite/laser_pos").get_pos()
+		var pos = get_pos()+lpos
 		if(siding_left):
 			li.invert_direction()
+			pos = pos-Vector2(2*lpos.x,0)
 		li.set_starting_pos(pos)
 		get_parent().add_child(li)
+		PS2D.body_add_collision_exception(li.get_node("body").get_rid(), get_rid())
 	
 	shooting=shot
 		

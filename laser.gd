@@ -14,13 +14,32 @@ var velocity_sign
 
 func _ready():
 	set_process(true)
+	set_fixed_process(true)
 	pos=starting_pos
 	velocity_sign=velocity/abs(velocity)
-	print(velocity_sign)
+	#print(velocity_sign)
 
 func _process(delta):
+	pass
+
+func _fixed_process(delta):
+	var shape= get_node("body/shape")
 	pos=pos+Vector2(velocity*delta, 0)
+	var current_laser=pos-starting_pos
+	if current_laser.length() < laser_length*laser_solid:
+		shape.get_shape().set_extents(current_laser/2+Vector2(0,3))
+		shape.set_pos(pos-current_laser/2)
+	else:
+		shape.get_shape().set_extents(Vector2(laser_length*laser_solid, 6)/2)
+		shape.set_pos(pos-Vector2(laser_length*laser_solid, 0)/2)
+	if pos.x + laser_length < 0 || pos.x - laser_length > get_viewport_rect().end.x:
+		#print("queue free laser")
+		queue_free()
 	update()
+	var body= get_node("body")
+	if body.is_colliding():
+		velocity=0
+		queue_free()
 	
 func _draw():
 	#draw_circle( starting_pos, 3, Color(1, 0, 0, 0.5))
