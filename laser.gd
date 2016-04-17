@@ -1,9 +1,9 @@
 
-extends Node2D
+extends KinematicBody2D
 
 var starting_pos=Vector2(500,100)
 var pos=starting_pos
-var velocity=600 
+var velocity=Vector2(100,0) 
 var line_col=Color(0, 1, 0, 1)
 var line_width=1
 var laser_length=150
@@ -16,28 +16,28 @@ func _ready():
 	set_process(true)
 	set_fixed_process(true)
 	pos=starting_pos
-	velocity_sign=velocity/abs(velocity)
+	set_pos(pos)
+	velocity_sign=velocity.x/abs(velocity.x)
 	#print(velocity_sign)
 
 func _process(delta):
 	pass
 
 func _fixed_process(delta):
-	var shape= get_node("body/shape")
-	pos=pos+Vector2(velocity*delta, 0)
+	var shape= get_node("shape")
+	var motion = velocity*delta
+	pos=get_pos()
 	var current_laser=pos-starting_pos
 	if current_laser.length() < laser_length*laser_solid:
 		shape.get_shape().set_extents(current_laser/2+Vector2(0,3))
-		shape.set_pos(pos-current_laser/2)
 	else:
 		shape.get_shape().set_extents(Vector2(laser_length*laser_solid, 6)/2)
-		shape.set_pos(pos-Vector2(laser_length*laser_solid, 0)/2)
 	if pos.x + laser_length < 0 || pos.x - laser_length > get_viewport_rect().end.x:
 		#print("queue free laser")
 		queue_free()
 	update()
-	var body= get_node("body")
-	if body.is_colliding():
+	motion=move(motion)
+	if is_colliding():
 		velocity=0
 		queue_free()
 	
@@ -61,7 +61,7 @@ func _draw():
 			end=start-velocity_sign*Vector2(dot_length-i*amount,0)
 			if current_laser.length() <= (pos-end).length():
 				break
-			if (end-start).dot(Vector2(velocity,0)) < 0:
+			if (end-start).dot(velocity) < 0:
 				draw_line(start, end, line_col, line_width)
 			start=end
 

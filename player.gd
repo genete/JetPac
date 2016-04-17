@@ -101,7 +101,7 @@ func _fixed_process(delta):
 			pos = pos-Vector2(2*lpos.x,0)
 		li.set_starting_pos(pos)
 		get_parent().add_child(li)
-		PS2D.body_add_collision_exception(li.get_node("body").get_rid(), get_rid())
+		PS2D.body_add_collision_exception(li.get_rid(), get_rid())
 	
 	shooting=shot
 		
