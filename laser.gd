@@ -28,15 +28,17 @@ func _fixed_process(delta):
 	var current_laser=pos-starting_pos
 	if current_laser.length() < laser_length*laser_solid:
 		shape.get_shape().set_extents(current_laser/2+Vector2(0,3))
-		shape.set_pos(pos-current_laser/2)
+		shape.set_pos(starting_pos-current_laser/2)
 	else:
 		shape.get_shape().set_extents(Vector2(laser_length*laser_solid, 6)/2)
-		shape.set_pos(pos-Vector2(laser_length*laser_solid, 0)/2)
+		shape.set_pos(starting_pos-velocity_sign*Vector2(laser_length*laser_solid, 0)/2)
 	if pos.x + laser_length < 0 || pos.x - laser_length > get_viewport_rect().end.x:
 		#print("queue free laser")
 		queue_free()
 	update()
 	var body= get_node("body")
+	var motion=Vector2(velocity, 0)*delta
+	body.move(motion)
 	if body.is_colliding():
 		velocity=0
 		queue_free()
