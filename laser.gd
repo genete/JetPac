@@ -1,7 +1,7 @@
 
 extends Node2D
 
-var starting_pos=Vector2()
+var starting_pos=Vector2(10,10)
 var pos=starting_pos
 var velocity=600 
 var line_col=Color(0, 1, 0, 1)

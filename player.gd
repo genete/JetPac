@@ -9,22 +9,12 @@ extends KinematicBody2D
 
 # Member variables
 const GRAVITY = 400.0 # Pixels/second
-
-# Angle in degrees towards either side that the player can consider "floor"
-const FLOOR_ANGLE_TOLERANCE = 40
-const WALK_FORCE = 600
-const WALK_MIN_SPEED = 10
 const WALK_MAX_SPEED = 80
-const STOP_FORCE = 1300
-const JUMP_SPEED = 200
-const JUMP_MAX_AIRBORNE_TIME = 0.2
-
-const SLIDE_STOP_VELOCITY = 1.0 # One pixel per second
-const SLIDE_STOP_MIN_TRAVEL = 1.0 # One pixel
+const ADDITIONAL_SPEED_ON_AIR = 20
+const MAX_VERTICAL_SPEED=140
+const THRESOLD=5
 
 var velocity = Vector2()
-var on_air_time = 100
-var jumping = false
 var shooting = false
 var jet_force = 650.0
 
@@ -53,10 +43,14 @@ func _fixed_process(delta):
 	
 	if (walk_left):
 		velocity.x=-WALK_MAX_SPEED
+		if(jet):
+			velocity.x-=ADDITIONAL_SPEED_ON_AIR
 		new_siding_left=true
 		new_anim="walk"
 	elif (walk_right):
 		velocity.x=WALK_MAX_SPEED
+		if(jet):
+			velocity.x+=ADDITIONAL_SPEED_ON_AIR
 		new_siding_left=false
 		new_anim="walk"
 	else:
@@ -69,7 +63,11 @@ func _fixed_process(delta):
 		# Integrate forces to velocity
 	velocity += force*delta
 	
-	# Integrate velocity into motion and move
+	#Limit vertical speed
+	if velocity.y < -MAX_VERTICAL_SPEED:
+		velocity.y=-MAX_VERTICAL_SPEED
+
+		# Integrate velocity into motion and move
 	var motion = velocity*delta
 	
 	# Move and consume motion
@@ -93,6 +91,7 @@ func _fixed_process(delta):
 		anim = new_anim
 		get_node("Sprite/anim").play(anim)
 	
+	# Add laser instance
 	if shot and not shooting:
 		var li=laser.instance()
 		var lpos=get_node("Sprite/laser_pos").get_pos()
@@ -106,6 +105,12 @@ func _fixed_process(delta):
 		PS2D.body_add_collision_exception(body_rid, get_rid())
 	
 	shooting=shot
-		
-		
+	
+	var pos=get_pos()
+	var right_limit=get_viewport_rect().end.x-THRESOLD
+	var left_limit=get_viewport_rect().pos.x+THRESOLD
+	if walk_left and pos.x <= left_limit:
+		set_pos(Vector2(right_limit, pos.y))
+	elif walk_right and pos.x >=right_limit:
+		set_pos(Vector2(left_limit, pos.y))
 
