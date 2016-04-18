@@ -5,17 +5,17 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 8, 8 )
+extents = Vector2( 4, 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 8, 8 )
+extents = Vector2( 4, 4 )
 
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 8, 8 )
+extents = Vector2( 4, 4 )
 
 [node name="Node" type="Node"]
 
@@ -24,13 +24,13 @@ extents = Vector2( 8, 8 )
 texture = ExtResource( 1 )
 centered = false
 region = true
-region_rect = Rect2( 0, 0, 16, 16 )
+region_rect = Rect2( 0, 0, 8, 8 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="left_edge"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 8, 8 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 4, 4 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -41,7 +41,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="left_edge/StaticBody2D"]
 
-transform/pos = Vector2( 8, 8 )
+transform/pos = Vector2( 4, 4 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -52,13 +52,13 @@ transform/pos = Vector2( 20, 0 )
 texture = ExtResource( 1 )
 centered = false
 region = true
-region_rect = Rect2( 16, 0, 16, 16 )
+region_rect = Rect2( 8, 0, 8, 8 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="platform"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 4, 4 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -69,7 +69,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platform/StaticBody2D"]
 
-transform/pos = Vector2( 8, 8 )
+transform/pos = Vector2( 4, 4 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
@@ -80,13 +80,13 @@ transform/pos = Vector2( 40, 0 )
 texture = ExtResource( 1 )
 centered = false
 region = true
-region_rect = Rect2( 32, 0, 16, 16 )
+region_rect = Rect2( 24, 0, 8, 8 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="right_edge"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 3 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 4, 4 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -97,7 +97,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="right_edge/StaticBody2D"]
 
-transform/pos = Vector2( 8, 8 )
+transform/pos = Vector2( 4, 4 )
 shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0

@@ -1,7 +1,7 @@
 
 extends Node2D
 
-var starting_pos=Vector2(500,100)
+var starting_pos=Vector2()
 var pos=starting_pos
 var velocity=600 
 var line_col=Color(0, 1, 0, 1)
@@ -11,37 +11,35 @@ var laser_solid=0.6
 var dot_length=10
 var space_length=8
 var velocity_sign
+var collision_shape_height=1
 
 func _ready():
-	set_process(true)
 	set_fixed_process(true)
 	pos=starting_pos
 	velocity_sign=velocity/abs(velocity)
 	#print(velocity_sign)
 
-func _process(delta):
-	pass
-
 func _fixed_process(delta):
-	var shape= get_node("body/shape")
-	pos=pos+Vector2(velocity*delta, 0)
-	var current_laser=pos-starting_pos
-	if current_laser.length() < laser_length*laser_solid:
-		shape.get_shape().set_extents(current_laser/2+Vector2(0,3))
-		shape.set_pos(starting_pos-current_laser/2)
-	else:
-		shape.get_shape().set_extents(Vector2(laser_length*laser_solid, 6)/2)
-		shape.set_pos(starting_pos-velocity_sign*Vector2(laser_length*laser_solid, 0)/2)
-	if pos.x + laser_length < 0 || pos.x - laser_length > get_viewport_rect().end.x:
-		#print("queue free laser")
-		queue_free()
-	update()
 	var body= get_node("body")
 	var motion=Vector2(velocity, 0)*delta
 	body.move(motion)
 	if body.is_colliding():
 		velocity=0
 		queue_free()
+	var shape= get_node("body/shape")
+	pos=pos+Vector2(velocity*delta, 0)
+	var current_laser=pos-starting_pos
+	if current_laser.length() < laser_length*laser_solid:
+		shape.get_shape().set_extents(current_laser/2+Vector2(0,collision_shape_height))
+		shape.set_pos(starting_pos-current_laser/2)
+	else:
+		shape.get_shape().set_extents(Vector2(laser_length*laser_solid, 2*collision_shape_height)/2)
+		shape.set_pos(starting_pos-velocity_sign*Vector2(laser_length*laser_solid, 0)/2)
+	if pos.x + laser_length < 0 || pos.x - laser_length > get_viewport_rect().end.x:
+		#print("queue free laser")
+		queue_free()
+	update()
+
 	
 func _draw():
 	#draw_circle( starting_pos, 3, Color(1, 0, 0, 0.5))

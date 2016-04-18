@@ -64,6 +64,7 @@ func _fixed_process(delta):
 		new_anim="idle"
 	if (jet):
 		force=Vector2(0,-jet_force)
+		new_anim="flying"
 
 		# Integrate forces to velocity
 	velocity += force*delta

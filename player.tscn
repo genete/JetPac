@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
@@ -8,6 +8,17 @@
 custom_solver_bias = 0.0
 radius = 9.0
 height = 8.0
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "flying"
+length = 0.4
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/keys = { "cont":false, "times":FloatArray( 0, 0.2, 0.4 ), "transitions":FloatArray( 1, 1, 1 ), "values":[ 7, 8, 7 ] }
 
 [sub_resource type="Animation" id=2]
 
@@ -34,7 +45,7 @@ tracks/0/keys = { "cont":false, "times":FloatArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 )
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -52,13 +63,14 @@ _update_shape_index = 0
 texture = ExtResource( 2 )
 vframes = 2
 hframes = 6
-frame = 6
+frame = 7
 
 [node name="anim" type="AnimationPlayer" parent="Sprite"]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
+anims/flying = SubResource( 4 )
 anims/idle = SubResource( 2 )
 anims/walk = SubResource( 3 )
 playback/active = true
@@ -68,6 +80,6 @@ autoplay = ""
 
 [node name="laser_pos" type="Position2D" parent="Sprite"]
 
-transform/pos = Vector2( 8.16913, -1.44936 )
+transform/pos = Vector2( 9.48673, -1.58112 )
 
 
