@@ -33,11 +33,11 @@ tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393
 transform/pos = Vector2( 130.154, 151.325 )
 collision/margin = 0.08
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="roof" type="StaticBody2D" parent="."]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 128, 12 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 128, 12 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -46,7 +46,7 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="roof_shape" type="CollisionShape2D" parent="roof"]
 
 transform/pos = Vector2( 128, 12 )
 shape = SubResource( 1 )
