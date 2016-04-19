@@ -22,7 +22,7 @@ var prev_jump_pressed = false
 var anim=""
 var siding_left=false
 
-var laser = preload("res://laser.tscn")
+var laser = preload("res://new_laser.tscn")
 
 
 func _ready():
@@ -99,10 +99,11 @@ func _fixed_process(delta):
 		if(siding_left):
 			li.invert_direction()
 			pos = pos-Vector2(2*lpos.x,0)
-		li.set_starting_pos(pos)
+		li.set_pos(pos)
 		get_parent().add_child(li)
-		var body_rid=li.get_node("body").get_rid()
-		PS2D.body_add_collision_exception(body_rid, get_rid())
+#		var body_rid=li.get_node("body").get_rid()
+#		PS2D.body_add_collision_exception(body_rid, get_rid())
+		PS2D.body_add_collision_exception(li, get_rid())
 	
 	shooting=shot
 	
