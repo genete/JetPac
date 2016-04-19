@@ -36,6 +36,7 @@ texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -100, 0 )
 vframes = 12
+frame = 11
 
 [node name="anim" type="AnimationPlayer" parent="laser_sprite"]
 
