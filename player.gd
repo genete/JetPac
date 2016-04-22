@@ -27,6 +27,9 @@ var laser = preload("res://new_laser.tscn")
 
 func _ready():
 	set_fixed_process(true)
+	PS2D.body_add_collision_exception(get_node("../Ship0/body00").get_rid(), get_rid())
+	PS2D.body_add_collision_exception(get_node("../Ship0/body01").get_rid(), get_rid())
+	PS2D.body_add_collision_exception(get_node("../Ship0/body02").get_rid(), get_rid())
 
 func _fixed_process(delta):
 	# Create forces
@@ -73,6 +76,7 @@ func _fixed_process(delta):
 	# Move and consume motion
 	motion = move(motion)
 	if(is_colliding()):
+		var obj=get_collider()
 		var n=get_collision_normal()
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)

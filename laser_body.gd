@@ -11,6 +11,10 @@ func _ready():
 	velocity_sign=velocity/abs(velocity)
 	var sprite=get_node("laser_sprite")
 	sprite.set_modulate(colors[randi()%7+1])
+	add_collision_exception_with(get_node("../Ship0/body00"))
+	add_collision_exception_with(get_node("../Ship0/body01"))
+	add_collision_exception_with(get_node("../Ship0/body02"))
+	
 
 func _fixed_process(delta):
 	var motion=Vector2(velocity, 0)*delta
@@ -20,7 +24,6 @@ func _fixed_process(delta):
 		velocity=0
 		queue_free()
 	if total_motion.length() > 200:
-		print(total_motion)
 		queue_free()
 	var pos=get_pos()
 	var right_limit=get_viewport_rect().end.x

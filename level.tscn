@@ -1,14 +1,75 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://tileset.res" type="TileSet" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ship0.gd" type="Script" id=3]
+[ext_resource path="res://body.gd" type="Script" id=4]
+[ext_resource path="res://images/ship00.png" type="Texture" id=5]
+[ext_resource path="res://images/ship01.png" type="Texture" id=6]
+[ext_resource path="res://images/ship02.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 128, 4 )
 
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=6]
+
+custom_solver_bias = 0.0
+extents = Vector2( 1, 192 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="CircleShape2D" id=5]
+
+custom_solver_bias = 0.0
+radius = 2.0
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 4, 8 )
+
+[sub_resource type="CircleShape2D" id=7]
+
+custom_solver_bias = 0.0
+radius = 2.0
+
+[sub_resource type="RectangleShape2D" id=8]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 24 )
+
 [node name="Node" type="Node"]
+
+[node name="roof" type="StaticBody2D" parent="."]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 128, 12 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+__meta__ = { "_editor_collapsed":true }
+
+[node name="roof_shape" type="CollisionShape2D" parent="roof"]
+
+transform/pos = Vector2( 128, 12 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 
@@ -33,24 +94,151 @@ tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393
 transform/pos = Vector2( 130.154, 151.325 )
 collision/margin = 0.08
 
-[node name="roof" type="StaticBody2D" parent="."]
+[node name="Ship0" type="Node2D" parent="."]
 
+script/script = ExtResource( 3 )
+
+[node name="body00" type="KinematicBody2D" parent="Ship0"]
+
+transform/pos = Vector2( 177, 166 )
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 128, 12 )
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/margin = 0.001
+script/script = ExtResource( 4 )
 
-[node name="roof_shape" type="CollisionShape2D" parent="roof"]
+[node name="sprite00" type="Sprite" parent="Ship0/body00"]
 
-transform/pos = Vector2( 128, 12 )
-shape = SubResource( 1 )
+texture = ExtResource( 5 )
+
+[node name="shape" type="CollisionShape2D" parent="Ship0/body00"]
+
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
+
+[node name="ship_launch_pos" type="Area2D" parent="Ship0/body00"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ship0/body00/ship_launch_pos"]
+
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="body01" type="KinematicBody2D" parent="Ship0"]
+
+transform/pos = Vector2( 211.53, 34.0666 )
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.001
+script/script = ExtResource( 4 )
+
+[node name="sprite01" type="Sprite" parent="Ship0/body01"]
+
+texture = ExtResource( 6 )
+
+[node name="shape" type="CollisionShape2D" parent="Ship0/body01"]
+
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[node name="area01" type="Area2D" parent="Ship0/body01"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 5 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="area_shape" type="CollisionShape2D" parent="Ship0/body01/area01"]
+
+shape = SubResource( 5 )
+trigger = false
+_update_shape_index = 0
+
+[node name="body02" type="KinematicBody2D" parent="Ship0"]
+
+transform/pos = Vector2( 53.8728, 50.7038 )
+input/pickable = false
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.001
+script/script = ExtResource( 4 )
+
+[node name="sprite02" type="Sprite" parent="Ship0/body02"]
+
+texture = ExtResource( 7 )
+
+[node name="shape" type="CollisionShape2D" parent="Ship0/body02"]
+
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="area02" type="Area2D" parent="Ship0/body02"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="area_shape" type="CollisionShape2D" parent="Ship0/body02/area02"]
+
+shape = SubResource( 7 )
+trigger = false
+_update_shape_index = 0
+
+[node name="launch_area" type="Area2D" parent="Ship0"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 177, 160 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="launch_shape" type="CollisionShape2D" parent="Ship0/launch_area"]
+
+transform/pos = Vector2( 177, 160 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="Ship0/body00/ship_launch_pos" to="Ship0" method="_on_ship_launch_pos_body_enter"]
+
+[connection signal="body_enter" from="Ship0/body01/area01" to="Ship0" method="_on_body01_body_enter"]
+
+[connection signal="body_enter" from="Ship0/body02/area02" to="Ship0" method="_on_body02_body_enter"]
+
+[connection signal="body_enter" from="Ship0/launch_area" to="Ship0" method="_on_launch_area_body_enter"]
 
 
