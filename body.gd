@@ -9,6 +9,7 @@ var first_time=true
 func _ready():
 	set_fixed_process(true)
 	start_gravity()
+	
 
 func _fixed_process(delta):
 	var force = Vector2(0, gravity)

@@ -10,6 +10,10 @@ var picked_02=false
 func _ready():
 	get_node("body01/area01").set_enable_monitoring(true)
 	get_node("body02/area02").set_enable_monitoring(false)
+	get_node("body00").add_collision_exception_with(get_node("body01"))
+	get_node("body00").add_collision_exception_with(get_node("body02"))
+	get_node("body01").add_collision_exception_with(get_node("body02"))
+	
 
 
 
@@ -51,9 +55,12 @@ func _on_ship_launch_pos_body_enter( body ):
 			ship_body.start_gravity()
 			if b1:
 				get_node("body01/area01").set_enable_monitoring(false)
+				get_node("body00").remove_collision_exception_with(get_node("body01"))
 				get_node("body02/area02").set_enable_monitoring(true)
 			else:
 				ship_body.get_node("area02").set_enable_monitoring(false)
+				get_node("body01").remove_collision_exception_with(get_node("body02"))
+				
 
 
 
