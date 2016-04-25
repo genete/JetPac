@@ -4,12 +4,13 @@ extends KinematicBody2D
 const GRAVITY = 100.0 
 var velocity = Vector2()
 var gravity
-var first_time=true
 
 func _ready():
+	randomize()
 	set_fixed_process(true)
 	start_gravity()
 	add_collision_exception_with(get_node("../../roof"))
+	set_pos(Vector2(randf()*get_viewport_rect().size.x, -20))
 	
 
 func _fixed_process(delta):
@@ -23,6 +24,8 @@ func _fixed_process(delta):
 		var n=get_collision_normal()
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
+		if(velocity.x==0 and velocity.y==0):
+			stop_gravity()
 		move(motion)
 
 

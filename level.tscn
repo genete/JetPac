@@ -1,12 +1,16 @@
-[gd_scene load_steps=16 format=1]
+[gd_scene load_steps=22 format=1]
 
 [ext_resource path="res://tileset.res" type="TileSet" id=1]
-[ext_resource path="res://player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ship.gd" type="Script" id=3]
-[ext_resource path="res://body.gd" type="Script" id=4]
-[ext_resource path="res://images/ship00.png" type="Texture" id=5]
-[ext_resource path="res://images/ship01.png" type="Texture" id=6]
-[ext_resource path="res://images/ship02.png" type="Texture" id=7]
+[ext_resource path="res://ship.gd" type="Script" id=2]
+[ext_resource path="res://body.gd" type="Script" id=3]
+[ext_resource path="res://images/ship000.png" type="Texture" id=4]
+[ext_resource path="res://images/ship001.png" type="Texture" id=5]
+[ext_resource path="res://flames.tscn" type="PackedScene" id=6]
+[ext_resource path="res://images/ship010.png" type="Texture" id=7]
+[ext_resource path="res://images/ship01.png" type="Texture" id=8]
+[ext_resource path="res://images/ship020.png" type="Texture" id=9]
+[ext_resource path="res://images/ship02.png" type="Texture" id=10]
+[ext_resource path="res://player.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -48,6 +52,22 @@ radius = 2.0
 custom_solver_bias = 0.0
 extents = Vector2( 8, 24 )
 
+[sub_resource type="RectangleShape2D" id=9]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="Animation" id=10]
+
+resource/name = "launch"
+length = 6.0
+loop = false
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:transform/pos")
+tracks/0/interp = 1
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 6 ), "transitions":FloatArray( 1, 1 ), "values":[ Vector2( 0, 0 ), Vector2( 0, -170 ) ] }
+
 [node name="Node" type="Node2D"]
 
 [node name="roof" type="StaticBody2D" parent="."]
@@ -87,16 +107,11 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393245, 2, 524292, 0, 524293, 1, 524294, 1, 524295, 1, 524296, 1, 524297, 2, 786448, 0, 786449, 1, 786450, 1, 786451, 2, 1507328, 0, 1507329, 1, 1507330, 1, 1507331, 1, 1507332, 1, 1507333, 1, 1507334, 1, 1507335, 1, 1507336, 1, 1507337, 1, 1507338, 1, 1507339, 1, 1507340, 1, 1507341, 1, 1507342, 1, 1507343, 1, 1507344, 1, 1507345, 1, 1507346, 1, 1507347, 1, 1507348, 1, 1507349, 1, 1507350, 1, 1507351, 1, 1507352, 1, 1507353, 1, 1507354, 1, 1507355, 1, 1507356, 1, 1507357, 1, 1507358, 1, 1507359, 2 )
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 130.154, 151.325 )
-collision/margin = 0.08
+tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393245, 2, 524292, 0, 524293, 1, 524294, 1, 524295, 1, 524296, 1, 524297, 2, 786448, 0, 786449, 1, 786450, 1, 786451, 2, 1572861, 1, 1572862, 1, 1572863, 1, 1507328, 0, 1507329, 1, 1507330, 1, 1507331, 1, 1507332, 1, 1507333, 1, 1507334, 1, 1507335, 1, 1507336, 1, 1507337, 1, 1507338, 1, 1507339, 1, 1507340, 1, 1507341, 1, 1507342, 1, 1507343, 1, 1507344, 1, 1507345, 1, 1507346, 1, 1507347, 1, 1507348, 1, 1507349, 1, 1507350, 1, 1507351, 1, 1507352, 1, 1507353, 1, 1507354, 1, 1507355, 1, 1507356, 1, 1507357, 1, 1507358, 1, 1507359, 2, 1507360, 1, 1507361, 1, 1507362, 1 )
 
 [node name="Ship" type="Node2D" parent="."]
 
-script/script = ExtResource( 3 )
+script/script = ExtResource( 2 )
 
 [node name="body00" type="KinematicBody2D" parent="Ship"]
 
@@ -108,10 +123,17 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 4 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_collapsed":true }
 
-[node name="sprite00" type="Sprite" parent="Ship/body00"]
+[node name="sprite000" type="Sprite" parent="Ship/body00"]
 
+transform/pos = Vector2( 0, 4 )
+texture = ExtResource( 4 )
+
+[node name="sprite001" type="Sprite" parent="Ship/body00"]
+
+transform/pos = Vector2( 0, -4 )
 texture = ExtResource( 5 )
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body00"]
@@ -124,7 +146,7 @@ _update_shape_index = 0
 
 input/pickable = true
 shapes/0/shape = SubResource( 3 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, -128 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -128 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -138,6 +160,10 @@ shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
+[node name="flames" parent="Ship/body00" instance=ExtResource( 6 )]
+
+visibility/visible = false
+
 [node name="body01" type="KinematicBody2D" parent="Ship"]
 
 transform/pos = Vector2( 211.53, 34.0666 )
@@ -148,12 +174,18 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 4 )
+script/script = ExtResource( 3 )
 __meta__ = { "_editor_collapsed":true }
 
-[node name="sprite01" type="Sprite" parent="Ship/body01"]
+[node name="sprite010" type="Sprite" parent="Ship/body01"]
 
-texture = ExtResource( 6 )
+transform/pos = Vector2( 0, 4 )
+texture = ExtResource( 7 )
+
+[node name="sprite011" type="Sprite" parent="Ship/body01"]
+
+transform/pos = Vector2( 0, -4 )
+texture = ExtResource( 8 )
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body01"]
 
@@ -188,12 +220,18 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 4 )
+script/script = ExtResource( 3 )
 __meta__ = { "_editor_collapsed":true }
 
-[node name="sprite02" type="Sprite" parent="Ship/body02"]
+[node name="sprite020" type="Sprite" parent="Ship/body02"]
 
-texture = ExtResource( 7 )
+transform/pos = Vector2( 0, 4 )
+texture = ExtResource( 9 )
+
+[node name="sprite021" type="Sprite" parent="Ship/body02"]
+
+transform/pos = Vector2( 0, -4 )
+texture = ExtResource( 10 )
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body02"]
 
@@ -228,6 +266,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+__meta__ = { "_editor_collapsed":true }
 
 [node name="launch_shape" type="CollisionShape2D" parent="Ship/launch_area"]
 
@@ -236,6 +275,41 @@ shape = SubResource( 8 )
 trigger = false
 _update_shape_index = 0
 
+[node name="fuel_area" type="Area2D" parent="Ship"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 9 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 177, 176 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = { "_editor_collapsed":true }
+
+[node name="fuehape" type="CollisionShape2D" parent="Ship/fuel_area"]
+
+transform/pos = Vector2( 177, 176 )
+shape = SubResource( 9 )
+trigger = false
+_update_shape_index = 0
+
+[node name="anim" type="AnimationPlayer" parent="Ship"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/launch = SubResource( 10 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Player" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 130.154, 151.325 )
+collision/margin = 0.08
+
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 
 [connection signal="body_enter" from="Ship/body01/area01" to="Ship" method="_on_body01_body_enter"]
@@ -243,5 +317,7 @@ _update_shape_index = 0
 [connection signal="body_enter" from="Ship/body02/area02" to="Ship" method="_on_body02_body_enter"]
 
 [connection signal="body_enter" from="Ship/launch_area" to="Ship" method="_on_launch_area_body_enter"]
+
+[connection signal="body_enter" from="Ship/fuel_area" to="Ship" method="_on_fuel_area_body_enter"]
 
 
