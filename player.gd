@@ -30,6 +30,7 @@ func _ready():
 	PS2D.body_add_collision_exception(get_node("../Ship/body00").get_rid(), get_rid())
 	PS2D.body_add_collision_exception(get_node("../Ship/body01").get_rid(), get_rid())
 	PS2D.body_add_collision_exception(get_node("../Ship/body02").get_rid(), get_rid())
+	prepare_player()
 
 func _fixed_process(delta):
 	# Create forces
@@ -113,10 +114,18 @@ func _fixed_process(delta):
 	shooting=shot
 	
 	var pos=get_pos()
-	var right_limit=get_viewport_rect().end.x-THRESOLD
-	var left_limit=get_viewport_rect().pos.x+THRESOLD
+	var right_limit=256-THRESOLD
+	var left_limit=THRESOLD
 	if walk_left and pos.x <= left_limit:
+		print("viewport.pos.x=", get_viewport_rect().pos.x)
+		print("left_limit=", left_limit)
+		print("walk left and pos.x=", pos.x)
 		set_pos(Vector2(right_limit, pos.y))
 	elif walk_right and pos.x >=right_limit:
+		print("viewport.end.x=", get_viewport_rect().end.x)
+		print("right_limit=", right_limit)
+		print("walk right and pos.x=", pos.x)
 		set_pos(Vector2(left_limit, pos.y))
 
+func prepare_player():
+	set_pos(get_node("../Player_pos").get_pos())

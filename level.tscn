@@ -1,16 +1,12 @@
-[gd_scene load_steps=22 format=1]
+[gd_scene load_steps=18 format=1]
 
-[ext_resource path="res://tileset.res" type="TileSet" id=1]
-[ext_resource path="res://ship.gd" type="Script" id=2]
-[ext_resource path="res://body.gd" type="Script" id=3]
-[ext_resource path="res://images/ship000.png" type="Texture" id=4]
-[ext_resource path="res://images/ship001.png" type="Texture" id=5]
+[ext_resource path="res://level.gd" type="Script" id=1]
+[ext_resource path="res://tileset.res" type="TileSet" id=2]
+[ext_resource path="res://ship.gd" type="Script" id=3]
+[ext_resource path="res://body.gd" type="Script" id=4]
+[ext_resource path="res://images/ship.png" type="Texture" id=5]
 [ext_resource path="res://flames.tscn" type="PackedScene" id=6]
-[ext_resource path="res://images/ship010.png" type="Texture" id=7]
-[ext_resource path="res://images/ship01.png" type="Texture" id=8]
-[ext_resource path="res://images/ship020.png" type="Texture" id=9]
-[ext_resource path="res://images/ship02.png" type="Texture" id=10]
-[ext_resource path="res://player.tscn" type="PackedScene" id=11]
+[ext_resource path="res://player.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -30,27 +26,27 @@ extents = Vector2( 1, 64 )
 [sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
+extents = Vector2( 8, 24 )
+
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
 extents = Vector2( 8, 8 )
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 
 custom_solver_bias = 0.0
 radius = 2.0
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 
 custom_solver_bias = 0.0
-extents = Vector2( 4, 8 )
+extents = Vector2( 8, 8 )
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=8]
 
 custom_solver_bias = 0.0
 radius = 2.0
-
-[sub_resource type="RectangleShape2D" id=8]
-
-custom_solver_bias = 0.0
-extents = Vector2( 8, 24 )
 
 [sub_resource type="RectangleShape2D" id=9]
 
@@ -68,7 +64,9 @@ tracks/0/path = NodePath(".:transform/pos")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":true, "times":FloatArray( 0, 6 ), "transitions":FloatArray( 1, 1 ), "values":[ Vector2( 0, 0 ), Vector2( 0, -170 ) ] }
 
-[node name="Node" type="Node2D"]
+[node name="World" type="Node2D"]
+
+script/script = ExtResource( 1 )
 
 [node name="roof" type="StaticBody2D" parent="."]
 
@@ -94,7 +92,7 @@ _update_shape_index = 0
 [node name="TileMap" type="TileMap" parent="."]
 
 mode = 0
-tile_set = ExtResource( 1 )
+tile_set = ExtResource( 2 )
 cell/size = Vector2( 8, 8 )
 cell/quadrant_size = 8
 cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -111,7 +109,7 @@ tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393
 
 [node name="Ship" type="Node2D" parent="."]
 
-script/script = ExtResource( 2 )
+script/script = ExtResource( 3 )
 
 [node name="body00" type="KinematicBody2D" parent="Ship"]
 
@@ -123,18 +121,23 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 3 )
-__meta__ = { "_editor_collapsed":true }
+script/script = ExtResource( 4 )
 
 [node name="sprite000" type="Sprite" parent="Ship/body00"]
 
 transform/pos = Vector2( 0, 4 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 20
 
 [node name="sprite001" type="Sprite" parent="Ship/body00"]
 
 transform/pos = Vector2( 0, -4 )
 texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 16
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body00"]
 
@@ -164,39 +167,68 @@ _update_shape_index = 0
 
 visibility/visible = false
 
+[node name="launch_area" type="Area2D" parent="Ship/body00"]
+
+transform/pos = Vector2( -177, -176 )
+input/pickable = true
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 177, 160 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="launch_shape" type="CollisionShape2D" parent="Ship/body00/launch_area"]
+
+transform/pos = Vector2( 177, 160 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="body00_pos" type="Position2D" parent="Ship"]
+
+transform/pos = Vector2( 177, 176 )
+
 [node name="body01" type="KinematicBody2D" parent="Ship"]
 
 transform/pos = Vector2( 211.53, 34.0666 )
 input/pickable = false
-shapes/0/shape = SubResource( 4 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 __meta__ = { "_editor_collapsed":true }
 
 [node name="sprite010" type="Sprite" parent="Ship/body01"]
 
 transform/pos = Vector2( 0, 4 )
-texture = ExtResource( 7 )
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 12
 
 [node name="sprite011" type="Sprite" parent="Ship/body01"]
 
 transform/pos = Vector2( 0, -4 )
-texture = ExtResource( 8 )
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 8
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body01"]
 
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
 [node name="area01" type="Area2D" parent="Ship/body01"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -206,43 +238,51 @@ angular_damp = 1.0
 
 [node name="area_shape" type="CollisionShape2D" parent="Ship/body01/area01"]
 
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
+
+[node name="body01_pos" type="Position2D" parent="Ship"]
+
+transform/pos = Vector2( 212, 40 )
 
 [node name="body02" type="KinematicBody2D" parent="Ship"]
 
 transform/pos = Vector2( 53.8728, 50.7038 )
 input/pickable = false
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
-script/script = ExtResource( 3 )
-__meta__ = { "_editor_collapsed":true }
+script/script = ExtResource( 4 )
 
 [node name="sprite020" type="Sprite" parent="Ship/body02"]
 
 transform/pos = Vector2( 0, 4 )
-texture = ExtResource( 9 )
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
+frame = 4
 
 [node name="sprite021" type="Sprite" parent="Ship/body02"]
 
 transform/pos = Vector2( 0, -4 )
-texture = ExtResource( 10 )
+texture = ExtResource( 5 )
+vframes = 6
+hframes = 4
 
 [node name="shape" type="CollisionShape2D" parent="Ship/body02"]
 
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
 [node name="area02" type="Area2D" parent="Ship/body02"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 7 )
+shapes/0/shape = SubResource( 8 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -252,28 +292,13 @@ angular_damp = 1.0
 
 [node name="area_shape" type="CollisionShape2D" parent="Ship/body02/area02"]
 
-shape = SubResource( 7 )
-trigger = false
-_update_shape_index = 0
-
-[node name="launch_area" type="Area2D" parent="Ship"]
-
-input/pickable = true
-shapes/0/shape = SubResource( 8 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 177, 160 )
-shapes/0/trigger = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-__meta__ = { "_editor_collapsed":true }
-
-[node name="launch_shape" type="CollisionShape2D" parent="Ship/launch_area"]
-
-transform/pos = Vector2( 177, 160 )
 shape = SubResource( 8 )
 trigger = false
 _update_shape_index = 0
+
+[node name="body02_pos" type="Position2D" parent="Ship"]
+
+transform/pos = Vector2( 54, 56 )
 
 [node name="fuel_area" type="Area2D" parent="Ship"]
 
@@ -285,7 +310,6 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-__meta__ = { "_editor_collapsed":true }
 
 [node name="fuehape" type="CollisionShape2D" parent="Ship/fuel_area"]
 
@@ -305,18 +329,22 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="Player" parent="." instance=ExtResource( 11 )]
+[node name="Player" parent="." instance=ExtResource( 7 )]
 
 transform/pos = Vector2( 130.154, 151.325 )
 collision/margin = 0.08
 
+[node name="Player_pos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 150, 174 )
+
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
+
+[connection signal="body_enter" from="Ship/body00/launch_area" to="Ship" method="_on_launch_area_body_enter"]
 
 [connection signal="body_enter" from="Ship/body01/area01" to="Ship" method="_on_body01_body_enter"]
 
 [connection signal="body_enter" from="Ship/body02/area02" to="Ship" method="_on_body02_body_enter"]
-
-[connection signal="body_enter" from="Ship/launch_area" to="Ship" method="_on_launch_area_body_enter"]
 
 [connection signal="body_enter" from="Ship/fuel_area" to="Ship" method="_on_fuel_area_body_enter"]
 

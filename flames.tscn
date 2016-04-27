@@ -19,7 +19,7 @@ transform/pos = Vector2( 0, 16 )
 texture = ExtResource( 1 )
 hframes = 2
 frame = 1
-modulate = Color( 1, 0.164062, 0, 1 )
+modulate = Color( 0.752941, 0, 0, 0.752941 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 

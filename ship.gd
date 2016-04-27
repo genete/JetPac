@@ -4,8 +4,8 @@ extends Node2D
 var player_class=preload("res://player.gd")
 var ship_body_class=preload("res://body.gd")
 var fuel_class=preload("res://fuel.gd")
-var assembled=false
-var fuel_level=0
+var fuel_scene=preload("res://fuel.tscn")
+
 var sprites={
 1:"body00/sprite000",
 2:"body00/sprite001",
@@ -14,38 +14,80 @@ var sprites={
 5:"body02/sprite020",
 6:"body02/sprite021"
 }
-var remaining_fuel_units
-const FUEL_COLOR=Color(125.0/255, 0, 191.0/255)
-var fuel_color=FUEL_COLOR
-var fuel_scene=preload("res://fuel.tscn")
-var counter=0
+const MAX_FUEL=6
+const FUEL_COLOR=Color(192.0/255, 0, 192.0/255)
+const COLOR_WHITE=Color(1,1,1)
 const COUNTER_MAX=0.5
+const LAST_SHIP=4
+const MAX_WAVES=2
+
+var assembled=false
+var fuel_level=0
+var remaining_fuel_units
+var fuel_color=FUEL_COLOR
+var counter=0
 var player_is_in_ship=false
 var launch_played=false
 var launch_played_backward=false
+var waves_counter=0
+var current_ship=1
 
 
 func _ready():
 	set_process(true)
-	get_node("body01/area01").set_enable_monitoring(true)
-	get_node("body02/area02").set_enable_monitoring(false)
-	get_node("body00").add_collision_exception_with(get_node("body01"))
-	get_node("body00").add_collision_exception_with(get_node("body02"))
-	get_node("body01").add_collision_exception_with(get_node("body02"))
-	add_user_signal("ship_assembled")
+	prepare_ship(current_ship)
+
+
+func prepare_ship(current_ship):
+	var body00=get_node("body00")
+	var body01=get_node("body01")
+	var body02=get_node("body02")
+	body00.get_node("ship_launch_pos").set_enable_monitoring(false)
+	body01.get_node("area01").set_enable_monitoring(true)
+	body02.get_node("area02").set_enable_monitoring(false)
+	body00.add_collision_exception_with(body01)
+	body00.add_collision_exception_with(body02)
+	body01.add_collision_exception_with(body02)
+	body00.set_pos(get_node("body00_pos").get_pos())
+	body01.set_pos(get_node("body01_pos").get_pos())
+	body02.set_pos(get_node("body02_pos").get_pos())
+	var sprite000=body00.get_node("sprite000")
+	var sprite001=body00.get_node("sprite001")
+	var sprite010=body01.get_node("sprite010")
+	var sprite011=body01.get_node("sprite011")
+	var sprite020=body02.get_node("sprite020")
+	var sprite021=body02.get_node("sprite021")
+	sprite000.set_frame(20+current_ship-1)
+	sprite001.set_frame(16+current_ship-1)
+	sprite010.set_frame(12+current_ship-1)
+	sprite011.set_frame(8+current_ship-1)
+	sprite020.set_frame(4+current_ship-1)
+	sprite021.set_frame(0+current_ship-1)
+	body00.get_node("ship_launch_pos").set_enable_monitoring(true)
+
+func next_ship():
+	set_pos(Vector2(0,0))
+	current_ship+=1
+	if current_ship>4:
+		current_ship=1
+	prepare_ship(current_ship)
+	get_node("../Player").prepare_player()
+
+func paint_fuel_on_ship():
+	for f in range (0, MAX_FUEL):
+		var node_path=sprites[f+1]
+		var sprite=get_node(node_path)
+		if f+1<= fuel_level:
+			sprite.set_modulate(fuel_color)
+		else:
+			sprite.set_modulate(COLOR_WHITE)
 
 func _process(delta):
 	# if assembled draw the filled fuel
 	if assembled:
-		for f in range (0, 6):
-			var node_path=sprites[f+1]
-			var sprite=get_node(node_path)
-			if f+1<= fuel_level:
-				sprite.set_modulate(fuel_color)
-			else:
-				sprite.set_modulate(Color(1,1,1,1))
+		paint_fuel_on_ship()
 	# if assembled and not fuel filled and no fuel unit present, then drop a fuel
-	remaining_fuel_units=6-fuel_level
+	remaining_fuel_units=MAX_FUEL-fuel_level
 	var player_has_fuel=get_node("../Player").has_node("Fuel")
 	var ship_scene_has_fuel=has_node("Fuel")
 	if assembled and remaining_fuel_units>0 and not player_has_fuel and not ship_scene_has_fuel and not player_is_in_ship:
@@ -59,11 +101,12 @@ func _process(delta):
 		area.connect("body_enter", self, "_on_fuel_body_enter")
 	# if assembled and full filled, blink the ship
 	if assembled and not remaining_fuel_units:
+#		print("assembled. remaining fuel = ",remaining_fuel_units)
 		counter+=delta
 		if counter>COUNTER_MAX and fuel_color==FUEL_COLOR:
-			fuel_color=Color(1,1,1,1)
+			fuel_color=COLOR_WHITE
 			counter=0
-		elif counter>COUNTER_MAX and fuel_color==Color(1,1,1,1):
+		elif counter>COUNTER_MAX and fuel_color==COLOR_WHITE:
 			fuel_color=FUEL_COLOR
 			counter=0
 	# if player is in the ship do the animations 
@@ -81,18 +124,28 @@ func _process(delta):
 			if not launch_played:
 				anim.play("launch")
 				launch_played=true
-			elif not launch_played_backward:
+				waves_counter+=1
+			elif not launch_played_backward and waves_counter< MAX_WAVES:
 				anim.play_backwards("launch")
 				launch_played_backward=true
 				fuel_level=0
-			elif launch_played and launch_played_backward:
+		if not anim.is_playing():
+			if launch_played and (launch_played_backward or waves_counter>=MAX_WAVES):
+				fuel_level=0
 				flames_anim.stop()
 				flames.hide()
-				get_node("/root/Node/Player").show()
+				get_node("/root/World/Player").show()
 				player_is_in_ship=false
 				fuel_color=FUEL_COLOR
 				launch_played=false
 				launch_played_backward=false
+		if waves_counter>=MAX_WAVES and not anim.is_playing():
+			fuel_level=0
+			waves_counter=0
+			assembled=false
+			paint_fuel_on_ship()
+			next_ship()
+
 			
 #PLAYER GETS FUEL
 func _on_fuel_body_enter( body ):
@@ -130,13 +183,11 @@ func _on_body02_body_enter( body ):
 # PLAYER CROSSES LAUNCH POSITION
 func _on_ship_launch_pos_body_enter( body ):
 	if body extends ship_body_class:
+		print("body extends ship body class:", body.get_name())
 		var player=get_node("../Player")
 		if player.has_node("body01") or player.has_node("body02"):
 			player.remove_child(body)
 			add_child(body)
-			var dis=body.get_pos()
-			body.set_pos(Vector2(get_node("body00").get_pos().x, player.get_pos().y+dis.y))
-			body.start_gravity()
 			if body.get_name() == "body01":
 				body.get_node("area01").set_enable_monitoring(false)
 				get_node("body00").remove_collision_exception_with(get_node("body01"))
@@ -144,28 +195,10 @@ func _on_ship_launch_pos_body_enter( body ):
 			elif body.get_name()== "body02":
 				get_node("body02/area02").set_enable_monitoring(false)
 				get_node("body01").remove_collision_exception_with(get_node("body02"))
-##### OLD VERSION
-#	var b1=body.has_node("body01")
-#	var b2=body.has_node("body02")
-#	if b1 or b2:
-#		if body extends player_class:
-#			var player=body
-#			var ship_body
-#			if b1:
-#				ship_body=player.get_node("body01")
-#			else:
-#				ship_body=player.get_node("body02")
-#			player.remove_child(ship_body)
-#			add_child(ship_body)
-#			ship_body.set_pos(Vector2(get_node("body00").get_pos().x, player.get_pos().y))
-#			ship_body.start_gravity()
-#			if b1:
-#				get_node("body01/area01").set_enable_monitoring(false)
-#				get_node("body00").remove_collision_exception_with(get_node("body01"))
-#				get_node("body02/area02").set_enable_monitoring(true)
-#			else:
-#				ship_body.get_node("area02").set_enable_monitoring(false)
-#				get_node("body01").remove_collision_exception_with(get_node("body02"))
+			var dis=body.get_pos()
+			body.set_pos(Vector2(get_node("body00").get_pos().x, player.get_pos().y+dis.y))
+			body.start_gravity()
+
 	if body.has_node("Fuel"):
 		if body extends player_class:
 			var player=body

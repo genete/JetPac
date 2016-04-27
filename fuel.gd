@@ -11,6 +11,7 @@ func _ready():
 	start_gravity()
 	add_collision_exception_with(get_node("../../roof"))
 	set_pos(Vector2(randf()*get_viewport_rect().size.x, -20))
+	get_node("fuel_sprite").set_modulate(Color(192.0/255, 0, 192.0/255, 1))
 	
 
 func _fixed_process(delta):
