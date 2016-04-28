@@ -108,8 +108,15 @@ func _fixed_process(delta):
 		get_parent().add_child(li)
 		PS2D.body_add_collision_exception(li, get_rid())
 		PS2D.body_add_collision_exception(li, get_node("../Ship/body00").get_rid())
-		PS2D.body_add_collision_exception(li, get_node("../Ship/body01").get_rid())
-		PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
+		if not has_node("body01"):
+			PS2D.body_add_collision_exception(li, get_node("../Ship/body01").get_rid())
+		else:
+			PS2D.body_add_collision_exception(li, get_node("body01").get_rid())
+		
+		if not has_node("body02"):
+			PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
+		else:
+			PS2D.body_add_collision_exception(li, get_node("body02").get_rid())
 	
 	shooting=shot
 	

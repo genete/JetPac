@@ -14,12 +14,12 @@ var sprites={
 5:"body02/sprite020",
 6:"body02/sprite021"
 }
-const MAX_FUEL=6
+const MAX_FUEL=1
 const FUEL_COLOR=Color(192.0/255, 0, 192.0/255)
 const COLOR_WHITE=Color(1,1,1)
 const COUNTER_MAX=0.5
 const LAST_SHIP=4
-const MAX_WAVES=2
+var max_waves
 
 var assembled=false
 var fuel_level=0
@@ -36,6 +36,7 @@ var current_ship=1
 func _ready():
 	set_process(true)
 	prepare_ship(current_ship)
+	max_waves=get_node("/root/World").get_total_enemies_types()
 
 
 func prepare_ship(current_ship):
@@ -72,6 +73,16 @@ func next_ship():
 		current_ship=1
 	prepare_ship(current_ship)
 	get_node("../Player").prepare_player()
+
+func prepare_next_wave():
+	print("remove enemies")
+	get_node("/root/World").disable_enemies()
+
+func next_wave():
+	print("next_wave")
+	var world=get_node("/root/World")
+	world.enable_enemies()
+	return world.next_wave()
 
 func paint_fuel_on_ship():
 	for f in range (0, MAX_FUEL):
@@ -110,6 +121,7 @@ func _process(delta):
 			fuel_color=FUEL_COLOR
 			counter=0
 	# if player is in the ship do the animations 
+	var change_ship=false
 	if player_is_in_ship:
 		var flames=get_node("body00/flames")
 		flames.show()
@@ -125,12 +137,14 @@ func _process(delta):
 				anim.play("launch")
 				launch_played=true
 				waves_counter+=1
-			elif not launch_played_backward and waves_counter< MAX_WAVES:
-				anim.play_backwards("launch")
-				launch_played_backward=true
-				fuel_level=0
+				prepare_next_wave()
+			elif not launch_played_backward:
+				if not waves_counter>=max_waves:
+					anim.play_backwards("launch")
+					launch_played_backward=true
+					fuel_level=0
 		if not anim.is_playing():
-			if launch_played and (launch_played_backward or waves_counter>=MAX_WAVES):
+			if launch_played and (launch_played_backward or waves_counter>=max_waves):
 				fuel_level=0
 				flames_anim.stop()
 				flames.hide()
@@ -139,9 +153,10 @@ func _process(delta):
 				fuel_color=FUEL_COLOR
 				launch_played=false
 				launch_played_backward=false
-		if waves_counter>=MAX_WAVES and not anim.is_playing():
+		if not player_is_in_ship:
+			change_ship=next_wave()
+		if change_ship and not anim.is_playing():
 			fuel_level=0
-			waves_counter=0
 			assembled=false
 			paint_fuel_on_ship()
 			next_ship()
@@ -183,7 +198,7 @@ func _on_body02_body_enter( body ):
 # PLAYER CROSSES LAUNCH POSITION
 func _on_ship_launch_pos_body_enter( body ):
 	if body extends ship_body_class:
-		print("body extends ship body class:", body.get_name())
+		print("body extends ship body class: ", body.get_name())
 		var player=get_node("../Player")
 		if player.has_node("body01") or player.has_node("body02"):
 			player.remove_child(body)

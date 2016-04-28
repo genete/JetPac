@@ -110,6 +110,7 @@ tile_data = IntArray( 393240, 0, 393241, 1, 393242, 1, 393243, 1, 393244, 1, 393
 [node name="Ship" type="Node2D" parent="."]
 
 script/script = ExtResource( 3 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="body00" type="KinematicBody2D" parent="Ship"]
 
@@ -122,6 +123,7 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
 script/script = ExtResource( 4 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite000" type="Sprite" parent="Ship/body00"]
 
@@ -201,7 +203,6 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.001
 script/script = ExtResource( 4 )
-__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite010" type="Sprite" parent="Ship/body01"]
 
@@ -336,7 +337,9 @@ collision/margin = 0.08
 
 [node name="Player_pos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 150, 174 )
+transform/pos = Vector2( 150, 168 )
+
+[node name="Enemies" type="Node2D" parent="."]
 
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 
