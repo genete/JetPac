@@ -337,7 +337,7 @@ collision/margin = 0.08
 
 [node name="Player_pos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 150, 168 )
+transform/pos = Vector2( 150, 164 )
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -1,14 +1,8 @@
 
 extends KinematicBody2D
 
-# This is a simple collision demo showing how
-# the kinematic controller works.
-# move() will allow to move the node, and will
-# always move it to a non-colliding spot,
-# as long as it starts from a non-colliding spot too.
 
-# Member variables
-const GRAVITY = 400.0 # Pixels/second
+const GRAVITY = 300.0 # Pixels/second
 const WALK_MAX_SPEED = 80
 const ADDITIONAL_SPEED_ON_AIR = 20
 const MAX_VERTICAL_SPEED=140
@@ -21,8 +15,15 @@ var jet_force = 650.0
 var prev_jump_pressed = false
 var anim=""
 var siding_left=false
+var walk_left
+var walk_right
+var jet
+var shot
+var stop = true
 
 var laser = preload("res://new_laser.tscn")
+
+var disabled=false
 
 
 func _ready():
@@ -37,14 +38,19 @@ func _fixed_process(delta):
 	var force = Vector2(0, GRAVITY)
 	var new_anim=anim
 	var new_siding_left=siding_left
-	
-	var walk_left = Input.is_action_pressed("move_left")
-	var walk_right = Input.is_action_pressed("move_right")
-	var jet = Input.is_action_pressed("jet")
-	var shot=Input.is_action_pressed("shot")
-	
-	var stop = true
-	
+	if disabled:
+		walk_left=false
+		walk_right=false
+		jet=false
+		shot=false
+		force=Vector2(0,0)
+		velocity=Vector2(0,0)
+	else:
+		walk_left = Input.is_action_pressed("move_left")
+		walk_right = Input.is_action_pressed("move_right")
+		jet = Input.is_action_pressed("jet")
+		shot=Input.is_action_pressed("shot")
+		
 	if (walk_left):
 		velocity.x=-WALK_MAX_SPEED
 		if(jet):
@@ -120,6 +126,7 @@ func _fixed_process(delta):
 	
 	shooting=shot
 	
+	# Handle left and right screen limits 
 	var pos=get_pos()
 	var right_limit=256-THRESOLD
 	var left_limit=THRESOLD
@@ -136,3 +143,8 @@ func _fixed_process(delta):
 
 func prepare_player():
 	set_pos(get_node("../Player_pos").get_pos())
+
+func disable_player(var b):
+	print("disable player ", b)
+	disabled=b
+	get_node("CollisionShape2D").set_trigger(b)

@@ -15,8 +15,8 @@ func _ready():
 	var s=randi()%2
 	if s==0:
 		s=-1
-	velocity=Vector2(HORIZONTAL_VELOCITY*s, randf()*VERTICAL_VELOCITY)
-	velocity.x=velocity.x/3
+	velocity=Vector2(HORIZONTAL_VELOCITY*s, (0.1+randf())*VERTICAL_VELOCITY)
+	velocity.x=velocity.x/2
 	var sprite_width=get_node("Sprite").get_texture().get_width()
 	if s == -1:
 		set_pos(Vector2(-sprite_width, randf()*height+16))
@@ -24,8 +24,7 @@ func _ready():
 		get_node("Sprite").set_scale(Vector2(-1,1))
 		set_pos(Vector2(width+sprite_width, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
-#	get_node("Sprite").set_modulate(colors[randi()%7+1])
-	get_node("Sprite").set_modulate(colors[1])
+	get_node("Sprite").set_modulate(colors[randi()%7+1])
 
 func _fixed_process(delta):
 	var motion=velocity*delta

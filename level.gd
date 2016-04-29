@@ -30,8 +30,14 @@ func spawn_enemies(total):
 		enemy_instance.add_to_group("enemies")
 		enemy_instance.add_collision_exception_with(get_node("roof"))
 		enemy_instance.add_collision_exception_with(get_node("Ship/body00"))
-		enemy_instance.add_collision_exception_with(get_node("Ship/body01"))
-		enemy_instance.add_collision_exception_with(get_node("Ship/body02"))
+		if(get_node("Player").has_node("body01")):
+			enemy_instance.add_collision_exception_with(get_node("Player/body01"))
+		else:
+			enemy_instance.add_collision_exception_with(get_node("Ship/body01"))
+		if(get_node("Player").has_node("body02")):
+			enemy_instance.add_collision_exception_with(get_node("Player/body02"))
+		else:
+			enemy_instance.add_collision_exception_with(get_node("Ship/body02"))
 		if get_node("Ship").has_node("Fuel"):
 			enemy_instance.add_collision_exception_with(get_node("Ship/Fuel"))
 		var children=enemies.get_child_count()
@@ -43,19 +49,19 @@ func spawn_enemies(total):
 func _process(delta):
 	var enemies=get_node("Enemies")
 	var count=enemies.get_child_count()
-	if enabled_enemies:
-		if (MAX_ENEMIES_COUNT-count)>0:
-			print ("spawning ", MAX_ENEMIES_COUNT-count, " enemies")
-			print ("count = ", count)
-			spawn_enemies(MAX_ENEMIES_COUNT-count)
-	else:
-		get_tree().call_group(2, "enemies", "destroy")
+	if (MAX_ENEMIES_COUNT-count)>0 and enabled_enemies:
+#		print ("spawning ", MAX_ENEMIES_COUNT-count, " enemies")
+#		print ("count = ", count)
+		spawn_enemies(MAX_ENEMIES_COUNT-count)
 
-func disable_enemies():
-	enabled_enemies=false
+func destroy_enemies():
+	get_tree().call_group(2, "enemies", "destroy")
 
 func enable_enemies():
 	enabled_enemies=true
+
+func disable_enemies():
+	enabled_enemies=false
 
 func next_wave():
 	var ret=false
@@ -68,4 +74,4 @@ func next_wave():
 	return ret
 
 func get_total_enemies_types():
-	return TOTAL_ENEMIES_TYPES
+	return WAVE_CHANGE_SHIP
