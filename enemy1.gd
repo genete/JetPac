@@ -19,10 +19,11 @@ func _ready():
 	velocity.x=velocity.x/2
 	var sprite_width=get_node("Sprite").get_texture().get_width()
 	if s == -1:
-		set_pos(Vector2(-sprite_width, randf()*height+16))
+		set_pos(Vector2(-sprite_width, randf()*(height-8)+8))
 	else:
 		get_node("Sprite").set_scale(Vector2(-1,1))
-		set_pos(Vector2(width+sprite_width, randf()*height+16))
+		get_node("Sprite").set_pos(Vector2(12,0))
+		set_pos(Vector2(width+sprite_width, randf()*(height-8)+8))
 	get_node("Sprite/anim").play("fly")
 	get_node("Sprite").set_modulate(colors[randi()%7+1])
 

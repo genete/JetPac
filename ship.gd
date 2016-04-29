@@ -29,14 +29,14 @@ var counter=0
 var player_is_in_ship=false
 var launch_played=false
 var launch_played_backward=false
-var waves_counter=0
+var current_wave=1
 var current_ship=1
 
 
 func _ready():
 	set_process(true)
 	prepare_ship(current_ship)
-	max_waves_per_ship=get_node("/root/World").get_total_enemies_types()
+	max_waves_per_ship=get_node("/root/World").get_max_waves_per_ship()
 
 
 func prepare_ship(current_ship):
@@ -67,22 +67,25 @@ func prepare_ship(current_ship):
 	body00.get_node("ship_launch_pos").set_enable_monitoring(true)
 
 func next_ship():
+	print("next_ship()")
 	set_pos(Vector2(0,0))
 	current_ship+=1
+	print("current_ship=", current_ship)
 	if current_ship>4:
+		print("reset ship to 1")
 		current_ship=1
 	prepare_ship(current_ship)
 	get_node("../Player").prepare_player()
 
 func prepare_next_wave():
-	print("remove enemies")
+	print("destroy enemies")
 	var world=get_node("/root/World")
 	world.disable_enemies()
 	world.destroy_enemies()
 	
 
 func next_wave():
-	print("next_wave")
+	print("ship.gd:next_wave")
 	var world=get_node("/root/World")
 	world.enable_enemies()
 	return world.next_wave()
@@ -138,14 +141,14 @@ func _process(delta):
 				anim.play("launch")
 				launch_played=true
 			elif not launch_played_backward:
-				waves_counter+=1
+				current_wave+=1
 				prepare_next_wave()
-				if not waves_counter>=max_waves_per_ship:
+				if not current_wave>max_waves_per_ship:
 					anim.play_backwards("launch")
 					launch_played_backward=true
 					fuel_level=0
 		if not anim.is_playing():
-			if launch_played and (launch_played_backward or waves_counter>=max_waves_per_ship):
+			if launch_played and (launch_played_backward or current_wave>=max_waves_per_ship):
 				fuel_level=0
 				flames_anim.stop()
 				flames.hide()
@@ -155,10 +158,11 @@ func _process(delta):
 				launch_played=false
 				launch_played_backward=false
 		if not player_is_in_ship:
+			if current_wave>max_waves_per_ship:
+				current_wave=1
 			prepare_next_wave()
 			change_ship=next_wave()
-			if waves_counter>=max_waves_per_ship:
-				waves_counter=0
+			print("ship.gd:process(): not player in ship. current_wave=", current_wave, "change ship ", change_ship)
 		if change_ship and not anim.is_playing():
 			fuel_level=0
 			assembled=false

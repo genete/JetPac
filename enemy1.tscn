@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 6.0
+radius = 7.0
 
 [sub_resource type="Animation" id=2]
 
@@ -21,9 +21,10 @@ tracks/0/keys = { "cont":false, "times":FloatArray( 0, 0.2, 0.4 ), "transitions"
 
 [node name="enemy1" type="KinematicBody2D"]
 
+transform/pos = Vector2( 0, 16 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 6.24584, 6.93982 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 7, 7 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -49,7 +50,7 @@ autoplay = ""
 
 [node name="shape" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 6.24584, 6.93982 )
+transform/pos = Vector2( 7, 7 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0

@@ -6,8 +6,9 @@ extends Node2D
 # var b="textvar"
 
 var current_wave=1
+var current_enemy=1
 const TOTAL_ENEMIES_TYPES=2
-const WAVE_CHANGE_SHIP=2
+const MAX_WAVES_PER_SHIP=3
 var enabled_enemies=true
 var enemies_scenes={
 1: preload("enemy1.tscn"),
@@ -22,13 +23,13 @@ func _ready():
 	spawn_enemies(MAX_ENEMIES_COUNT)
 
 func spawn_enemies(total):
-	var enemy_scene=enemies_scenes[current_wave]
+	var enemy_scene=enemies_scenes[current_enemy]
 	var enemies=get_node("Enemies")
 	for i in range(0, total):
 		var enemy_instance=enemy_scene.instance()
 		enemies.add_child(enemy_instance)
 		enemy_instance.add_to_group("enemies")
-		enemy_instance.add_collision_exception_with(get_node("roof"))
+#		enemy_instance.add_collision_exception_with(get_node("roof"))
 		enemy_instance.add_collision_exception_with(get_node("Ship/body00"))
 		if(get_node("Player").has_node("body01")):
 			enemy_instance.add_collision_exception_with(get_node("Player/body01"))
@@ -66,12 +67,17 @@ func disable_enemies():
 func next_wave():
 	var ret=false
 	current_wave+=1
-	if current_wave > WAVE_CHANGE_SHIP:
-		ret = true
-	if current_wave > TOTAL_ENEMIES_TYPES:
+	current_enemy+=1
+	print("next_wave(): current_wave=", current_wave, "MAX_WAVES_PER_SHIP=", MAX_WAVES_PER_SHIP)
+	if current_wave >MAX_WAVES_PER_SHIP:
 		current_wave=1
+		ret = true
+		print("next_wave(): will return true")
+	if current_enemy > TOTAL_ENEMIES_TYPES:
+		print("next_wave():current_enemy>TOTAL ENEMY TYPES =", current_enemy, " will change to 1")
+		current_enemy=1
 		# increase velocity or number of enemies here
 	return ret
 
-func get_total_enemies_types():
-	return WAVE_CHANGE_SHIP
+func get_max_waves_per_ship():
+	return MAX_WAVES_PER_SHIP
