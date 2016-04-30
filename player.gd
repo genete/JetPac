@@ -10,6 +10,7 @@ const THRESOLD=5
 
 var velocity = Vector2()
 var shooting = false
+var jetting=false
 var jet_force = 650.0
 
 var prev_jump_pressed = false
@@ -22,6 +23,7 @@ var shot
 var stop = true
 
 var laser = preload("res://new_laser.tscn")
+var explosion= preload("res://explosion.tscn")
 
 var disabled=false
 
@@ -70,7 +72,7 @@ func _fixed_process(delta):
 		force=Vector2(0,-jet_force)
 		new_anim="flying"
 
-		# Integrate forces to velocity
+	# Integrate forces to velocity
 	velocity += force*delta
 	
 	#Limit vertical speed
@@ -123,7 +125,14 @@ func _fixed_process(delta):
 			PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
 		else:
 			PS2D.body_add_collision_exception(li, get_node("body02").get_rid())
+
+	if jet and not jetting:
+		var exp_instance=explosion.instance()
+		get_parent().add_child(exp_instance)
+		exp_instance.set_pos(get_pos()+Vector2(0, 12))
+		exp_instance.get_node("anim").play("explode")
 	
+	jetting=jet
 	shooting=shot
 	
 	# Handle left and right screen limits 

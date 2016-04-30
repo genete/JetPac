@@ -80,6 +80,7 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+__meta__ = { "_editor_collapsed":true }
 
 [node name="roof_shape" type="CollisionShape2D" parent="roof"]
 
@@ -87,6 +88,16 @@ transform/pos = Vector2( 128, 12 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="platforms" type="StaticBody2D" parent="."]
+
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
 
 [node name="TileMap" type="TileMap" parent="."]
 
