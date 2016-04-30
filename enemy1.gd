@@ -10,20 +10,20 @@ var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1,
 func _ready():
 	randomize()
 	set_fixed_process(true)
-	var height=192-16
+	var height=192-16-10
 	var width=256
 	var s=randi()%2
 	if s==0:
 		s=-1
-	velocity=Vector2(HORIZONTAL_VELOCITY*s, (0.1+randf())*VERTICAL_VELOCITY)
+	velocity=Vector2(HORIZONTAL_VELOCITY*s, (0.2+randf())*VERTICAL_VELOCITY)
 	velocity.x=velocity.x/2
 	var sprite_width=get_node("Sprite").get_texture().get_width()
 	if s == -1:
-		set_pos(Vector2(-sprite_width, randf()*(height-8)+8))
+		set_pos(Vector2(-sprite_width, randf()*height+16))
 	else:
 		get_node("Sprite").set_scale(Vector2(-1,1))
 		get_node("Sprite").set_pos(Vector2(12,0))
-		set_pos(Vector2(width+sprite_width, randf()*(height-8)+8))
+		set_pos(Vector2(width+sprite_width, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
 	get_node("Sprite").set_modulate(colors[randi()%7+1])
 
@@ -41,5 +41,5 @@ func _fixed_process(delta):
 		set_pos(pos-Vector2(right_limit, 0))
 		
 func destroy():
-	velocity=0
+	velocity=Vector2(0,0)
 	queue_free()
