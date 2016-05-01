@@ -1,10 +1,11 @@
 ##### ENEMY 1
 extends KinematicBody2D
 
-const HORIZONTAL_VELOCITY=80
+const HORIZONTAL_VELOCITY=50
 const VERTICAL_VELOCITY=15
 var velocity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
+var explosion= preload("res://explosion.tscn")
 
 
 func _ready():
@@ -16,7 +17,6 @@ func _ready():
 	if s==0:
 		s=-1
 	velocity=Vector2(HORIZONTAL_VELOCITY*s, (0.2+randf())*VERTICAL_VELOCITY)
-	velocity.x=velocity.x/2
 	var sprite_width=get_node("Sprite").get_texture().get_width()
 	if s == -1:
 		set_pos(Vector2(-sprite_width, randf()*height+16))
@@ -31,7 +31,7 @@ func _fixed_process(delta):
 	var motion=velocity*delta
 	move(motion)
 	if is_colliding():
-		destroy()
+		destroy(true)
 	var pos=get_pos()
 	var right_limit=256
 	var left_limit=0
@@ -40,6 +40,11 @@ func _fixed_process(delta):
 	elif(pos.x > right_limit):
 		set_pos(pos-Vector2(right_limit, 0))
 		
-func destroy():
+func destroy(var animate):
 	velocity=Vector2(0,0)
+	if animate:
+		var exp_instance=explosion.instance()
+		get_node("/root/World").add_child(exp_instance)
+		exp_instance.set_pos(get_pos()+Vector2(8, 8))
+		exp_instance.get_node("anim").play("explode")
 	queue_free()

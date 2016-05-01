@@ -234,7 +234,7 @@ func _on_ship_launch_pos_body_enter( body ):
 			fuel.get_node("fuel_area").set_enable_monitoring(false)
 
 
-
+# PLAYER OR SHIP SECTION ENTER LAUNCH POSITION
 func _on_launch_area_body_enter( body ):
 	if (body extends ship_body_class) and not (body.get_parent() extends player_class):
 		if body.get_name() != "body00":
@@ -250,7 +250,7 @@ func _on_launch_area_body_enter( body ):
 			get_node("body02").stop_gravity()
 
 
-
+# FUEL ENTER LAUNCH POSITION
 func _on_fuel_area_body_enter( body ):
 	if body extends fuel_class:
 		fuel_level+=1

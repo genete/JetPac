@@ -1,22 +1,22 @@
 ##### ENEMY 3
 extends KinematicBody2D
 
-const HORIZONTAL_VELOCITY=80
-const VERTICAL_VELOCITY=80
+const HORIZONTAL_VELOCITY=50
+const VERTICAL_VELOCITY=50
 const DIRECTION_CHANGE_TIME=3
 var velocity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
 var direction=0
 const DEG45=PI/4
 var counter=0
+var explosion= preload("res://explosion.tscn")
 
 func _ready():
 	randomize()
 	set_fixed_process(true)
-	var height=192-16
+	var height=192-16-8
 	var width=256
 	velocity=Vector2(HORIZONTAL_VELOCITY, VERTICAL_VELOCITY).rotated(direction)
-	velocity=velocity/3
 	var sprite_width=get_node("Sprite").get_texture().get_width()
 	set_pos(Vector2(-sprite_width, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
@@ -41,7 +41,7 @@ func _fixed_process(delta):
 		current_vel=current_vel.rotated(2*angle)
 		velocity=current_vel
 		if(obj.get_name()=="laser_body"):
-			destroy()
+			destroy(true)
 	if !colliding and counter > DIRECTION_CHANGE_TIME:
 		change_direction()
 		velocity=velocity.rotated(direction)
@@ -55,8 +55,13 @@ func _fixed_process(delta):
 		set_pos(pos-Vector2(right_limit, 0))
 	change_direction()
 		
-func destroy():
+func destroy(var animate):
 	velocity=Vector2(0,0)
+	if animate:
+		var exp_instance=explosion.instance()
+		get_node("/root/World").add_child(exp_instance)
+		exp_instance.set_pos(get_pos()+Vector2(8, 8))
+		exp_instance.get_node("anim").play("explode")
 	queue_free()
 
 func change_direction():

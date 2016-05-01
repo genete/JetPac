@@ -28,7 +28,7 @@ func _fixed_process(delta):
 		queue_free()
 		var collider=get_collider()
 		if collider.has_method("destroy"):
-			collider.destroy()
+			collider.destroy(true)
 	if total_motion.length() > 200:
 		queue_free()
 	var pos=get_pos()

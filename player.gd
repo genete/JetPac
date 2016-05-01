@@ -78,6 +78,8 @@ func _fixed_process(delta):
 	#Limit vertical speed
 	if velocity.y < -MAX_VERTICAL_SPEED:
 		velocity.y=-MAX_VERTICAL_SPEED
+	elif velocity.y > MAX_VERTICAL_SPEED:
+		velocity.y=MAX_VERTICAL_SPEED
 
 		# Integrate velocity into motion and move
 	var motion = velocity*delta
