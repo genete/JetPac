@@ -8,7 +8,7 @@ const ADDITIONAL_SPEED_ON_AIR = 20
 const MAX_VERTICAL_SPEED=140
 const THRESOLD=5
 const SECONDS_BEFORE_REVIVE=3
-const JET_FORCE = 150.0
+const JET_FORCE = 350.0
 const BOUNCE_FACTOR=40
 
 
@@ -116,7 +116,7 @@ func _fixed_process(delta):
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
 		move(motion)
-		if n.dot(Vector2(0,-1)) < 0.5 and obj.get_name()!="roof":
+		if n.dot(Vector2(0,-1)) < 0 and obj.get_name()!="roof":
 			velocity=BOUNCE_FACTOR*n
 			
 

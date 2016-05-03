@@ -11,19 +11,19 @@ radius = 8.0
 [sub_resource type="Animation" id=2]
 
 resource/name = "fly"
-length = 0.4
+length = 0.3
 loop = true
-step = 0.1
+step = 0.15
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
-tracks/0/keys = { "cont":false, "times":FloatArray( 0, 0.2, 0.4 ), "transitions":FloatArray( 1, 1, 1 ), "values":[ 0, 1, 0 ] }
+tracks/0/keys = { "cont":false, "times":FloatArray( 0, 0.15, 0.3 ), "transitions":FloatArray( 1, 1, 1 ), "values":[ 0, 1, 0 ] }
 
 [node name="enemy3" type="KinematicBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 8, 8 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
