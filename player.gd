@@ -7,6 +7,7 @@ const WALK_MAX_SPEED = 80
 const ADDITIONAL_SPEED_ON_AIR = 20
 const MAX_VERTICAL_SPEED=140
 const THRESOLD=5
+const SECONDS_BEFORE_REVIVE=3
 
 var velocity = Vector2()
 var shooting = false
@@ -26,6 +27,8 @@ var laser = preload("res://new_laser.tscn")
 var explosion= preload("res://explosion.tscn")
 
 var disabled=false
+var counter=0
+var destroyed=false
 
 
 func _ready():
@@ -36,6 +39,16 @@ func _ready():
 	prepare_player()
 
 func _fixed_process(delta):
+	if destroyed:
+		counter+=delta
+		if counter>SECONDS_BEFORE_REVIVE:
+			counter=0
+			destroyed=false
+			prepare_player()
+			disable_player(false)
+			show()
+			get_node("/root/World").enable_enemies()
+
 	# Create forces
 	var force = Vector2(0, GRAVITY)
 	var new_anim=anim
@@ -72,6 +85,13 @@ func _fixed_process(delta):
 		force=Vector2(0,-jet_force)
 		new_anim="flying"
 
+	if jet and not jetting and velocity.y==0:
+		var exp_instance=explosion.instance()
+		get_parent().add_child(exp_instance)
+		exp_instance.set_pos(get_pos()+Vector2(0, 12))
+		exp_instance.get_node("anim").play("explode")
+
+
 	# Integrate forces to velocity
 	velocity += force*delta
 	
@@ -88,6 +108,8 @@ func _fixed_process(delta):
 	motion = move(motion)
 	if(is_colliding()):
 		var obj=get_collider()
+		if obj.is_in_group("enemies"):
+			destroy(true)
 		var n=get_collision_normal()
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
@@ -127,12 +149,6 @@ func _fixed_process(delta):
 			PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
 		else:
 			PS2D.body_add_collision_exception(li, get_node("body02").get_rid())
-
-	if jet and not jetting:
-		var exp_instance=explosion.instance()
-		get_parent().add_child(exp_instance)
-		exp_instance.set_pos(get_pos()+Vector2(0, 12))
-		exp_instance.get_node("anim").play("explode")
 	
 	jetting=jet
 	shooting=shot
@@ -159,3 +175,27 @@ func disable_player(var b):
 	print("disable player ", b)
 	disabled=b
 	get_node("CollisionShape2D").set_trigger(b)
+
+func destroy(var animate):
+	var count=get_child_count()
+	var children=get_children()
+	var ship=get_node("/root/World/Ship")
+	for i in range(0, count):
+		if children[i].is_in_group("attached"):
+			var pos=children[i].get_pos()
+			remove_child(children[i])
+			ship.add_child(children[i])
+			children[i].set_pos(get_pos()+pos)
+			if children[i].has_method("start_gravity"):
+				children[i].start_gravity()
+			children[i].show()
+	destroyed=true
+	disable_player(true)
+	var exp_instance=explosion.instance()
+	get_parent().add_child(exp_instance)
+	exp_instance.set_pos(get_pos())
+	exp_instance.get_node("anim").play("explode")
+	hide()
+	get_node("/root/World").disable_enemies()
+	get_node("/root/World").destroy_enemies()
+	

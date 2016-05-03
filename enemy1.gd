@@ -1,7 +1,7 @@
 ##### ENEMY 1
 extends KinematicBody2D
 
-const HORIZONTAL_VELOCITY=50
+const HORIZONTAL_VELOCITY=40
 const VERTICAL_VELOCITY=15
 var velocity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
@@ -31,6 +31,9 @@ func _fixed_process(delta):
 	var motion=velocity*delta
 	move(motion)
 	if is_colliding():
+		var collider=get_collider()
+		if collider.has_method("destroy"):
+			collider.destroy(true)
 		destroy(true)
 	var pos=get_pos()
 	var right_limit=256

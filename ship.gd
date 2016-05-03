@@ -172,7 +172,7 @@ func _process(delta):
 			
 #PLAYER GETS FUEL
 func _on_fuel_body_enter( body ):
-	if body extends player_class:
+	if body extends player_class  and body.destroyed==false:
 		var fuel=get_node("Fuel")
 		var player=body
 		var dis=fuel.get_pos()-player.get_pos()
@@ -180,10 +180,11 @@ func _on_fuel_body_enter( body ):
 		player.add_child(fuel)
 		fuel.set_pos(dis)
 		fuel.stop_gravity()
+		fuel.add_to_group("attached")
 
 # PLAYER GETS FIRST SECTION
 func _on_body01_body_enter( body ):
-	if body extends player_class:
+	if body extends player_class and body.destroyed==false:
 		var body01=get_node("body01")
 		var player=body
 		var dis=body01.get_pos()-player.get_pos()
@@ -191,10 +192,11 @@ func _on_body01_body_enter( body ):
 		player.add_child(body01)
 		body01.set_pos(dis)
 		body01.stop_gravity()
+		body01.add_to_group("attached")
 
 # PLAYER GETS SECOND SECTION
 func _on_body02_body_enter( body ):
-	if body extends player_class:
+	if body extends player_class  and body.destroyed==false:
 		var body02=get_node("body02")
 		var player=body
 		var dis=body02.get_pos()-player.get_pos()
@@ -202,6 +204,7 @@ func _on_body02_body_enter( body ):
 		player.add_child(body02)
 		body02.set_pos(dis)
 		body02.stop_gravity()
+		body02.add_to_group("attached")
 
 # PLAYER CROSSES LAUNCH POSITION
 func _on_ship_launch_pos_body_enter( body ):

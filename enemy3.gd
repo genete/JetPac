@@ -1,8 +1,8 @@
 ##### ENEMY 3
 extends KinematicBody2D
 
-const HORIZONTAL_VELOCITY=50
-const VERTICAL_VELOCITY=50
+const HORIZONTAL_VELOCITY=40
+const VERTICAL_VELOCITY=40
 const DIRECTION_CHANGE_TIME=3
 var velocity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
@@ -31,7 +31,7 @@ func _fixed_process(delta):
 	move(motion)
 	if(is_colliding()):
 		colliding=true
-		var obj=get_collider()
+		var collider=get_collider()
 		var n=get_collision_normal()
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
@@ -40,8 +40,10 @@ func _fixed_process(delta):
 		var angle=current_vel.angle_to(n)
 		current_vel=current_vel.rotated(2*angle)
 		velocity=current_vel
-		if(obj.get_name()=="laser_body"):
+		if(collider.get_name()=="laser_body"):
 			destroy(true)
+		if collider.has_method("destroy"):
+			collider.destroy(true)
 	if !colliding and counter > DIRECTION_CHANGE_TIME:
 		change_direction()
 		velocity=velocity.rotated(direction)
