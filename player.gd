@@ -8,11 +8,13 @@ const ADDITIONAL_SPEED_ON_AIR = 20
 const MAX_VERTICAL_SPEED=140
 const THRESOLD=5
 const SECONDS_BEFORE_REVIVE=3
+const JET_FORCE = 150.0
+const BOUNCE_FACTOR=40
+
 
 var velocity = Vector2()
 var shooting = false
 var jetting=false
-var jet_force = 650.0
 
 var prev_jump_pressed = false
 var anim=""
@@ -82,7 +84,7 @@ func _fixed_process(delta):
 		velocity.x=0
 		new_anim="idle"
 	if (jet):
-		force=Vector2(0,-jet_force)
+		force=Vector2(0,-JET_FORCE)
 		new_anim="flying"
 
 	if jet and not jetting and velocity.y==0:
@@ -114,6 +116,10 @@ func _fixed_process(delta):
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
 		move(motion)
+		if n.dot(Vector2(0,-1)) < 0.5 and obj.get_name()!="roof":
+			velocity=BOUNCE_FACTOR*n
+			
+
 
 		# Update siding
 	if (new_siding_left != siding_left):

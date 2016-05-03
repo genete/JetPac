@@ -17,7 +17,6 @@ func _ready():
 	for j in range(0, children):
 		add_collision_exception_with(enemies.get_child(j))
 	
-	
 
 func _fixed_process(delta):
 	var force = Vector2(0, gravity)
@@ -33,6 +32,14 @@ func _fixed_process(delta):
 		if(velocity.x==0 and velocity.y==0):
 			stop_gravity()
 		move(motion)
+	if not get_parent().get_name()=="Player":
+		var pos=get_pos()
+		var right_limit=256
+		var left_limit=0
+		if(pos.x < left_limit):
+			set_pos(pos+Vector2(right_limit,0))
+		elif(pos.x > right_limit):
+			set_pos(pos-Vector2(right_limit, 0))
 
 
 func stop_gravity():
