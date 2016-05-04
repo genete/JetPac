@@ -14,7 +14,7 @@ var sprites={
 5:"body02/sprite020",
 6:"body02/sprite021"
 }
-const MAX_FUEL=1
+const MAX_FUEL=6
 const FUEL_COLOR=Color(192.0/255, 0, 192.0/255)
 const COLOR_WHITE=Color(1,1,1)
 const COUNTER_MAX=0.5

@@ -32,8 +32,8 @@ func _fixed_process(delta):
 	if total_motion.length() > 200:
 		queue_free()
 	var pos=get_pos()
-	var right_limit=get_viewport_rect().end.x
-	var left_limit=get_viewport_rect().pos.x
+	var right_limit=256
+	var left_limit=0
 	if(pos.x < left_limit):
 		set_pos(pos+Vector2(right_limit,0))
 	elif(pos.x > right_limit):

@@ -11,7 +11,7 @@ var explosion= preload("res://explosion.tscn")
 func _ready():
 	randomize()
 	set_fixed_process(true)
-	var height=192-16-10
+	var height=192-16-8-32
 	var width=256
 	var s=randi()%2
 	if s==0:

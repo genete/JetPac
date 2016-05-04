@@ -2,14 +2,14 @@
 extends KinematicBody2D
 
 
-const GRAVITY = 300.0 # Pixels/second
+const GRAVITY = 200.0 # Pixels/second
 const WALK_MAX_SPEED = 80
 const ADDITIONAL_SPEED_ON_AIR = 20
-const MAX_VERTICAL_SPEED=140
+const MAX_VERTICAL_SPEED=100
 const THRESOLD=5
 const SECONDS_BEFORE_REVIVE=3
-const JET_FORCE = 350.0
-const BOUNCE_FACTOR=40
+const JET_FORCE = 250.0
+const BOUNCE_FACTOR=50
 
 
 var velocity = Vector2()

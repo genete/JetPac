@@ -11,14 +11,14 @@ var explosion= preload("res://explosion.tscn")
 func _ready():
 	randomize()
 	set_fixed_process(true)
-	var height=192-16-8
+	var height=192-16-8-32
 	var width=256
 	var s=randi()%2
 	if s==0:
 		s=-1
 	velocity=Vector2(HORIZONTAL_VELOCITY*s, VERTICAL_VELOCITY*s)
 	var sprite_width=get_node("Sprite").get_texture().get_width()
-	if s == -1:
+	if s == 1:
 		set_pos(Vector2(-sprite_width, randf()*height+16))
 	else:
 		set_pos(Vector2(width+sprite_width, randf()*height+16))

@@ -7,17 +7,18 @@ extends Node2D
 
 var current_wave=1
 var current_enemy=1
-const TOTAL_ENEMIES_TYPES=4
+const TOTAL_ENEMIES_TYPES=5
 const MAX_WAVES_PER_SHIP=3
 var enabled_enemies=true
 var enemies_scenes={
 1: preload("enemy1.tscn"),
 2: preload("enemy2.tscn"),
 3: preload("enemy3.tscn"),
-4: preload("enemy4.tscn")
+4: preload("enemy4.tscn"),
+5: preload("enemy5.tscn")
 }
 const MAX_ENEMIES_COUNT=4
-const HOLD_SPAWN_ENEMIES=2
+const HOLD_SPAWN_ENEMIES=0.5
 var time_counter=0
 
 func _ready():
@@ -25,7 +26,7 @@ func _ready():
 	OS.set_window_resizable(false)
 	set_process(true)
 #	spawn_enemies(MAX_ENEMIES_COUNT)
-	set_up_labels(MAX_ENEMIES_COUNT)
+#	set_up_labels(MAX_ENEMIES_COUNT)
 
 func spawn_enemies(total):
 	var enemy_scene=enemies_scenes[current_enemy]
@@ -60,7 +61,7 @@ func _process(delta):
 		print ("spawning ", MAX_ENEMIES_COUNT-count, " enemies")
 		print ("count = ", count)
 		if time_counter>HOLD_SPAWN_ENEMIES:
-			spawn_enemies(MAX_ENEMIES_COUNT-count)
+			spawn_enemies(1)
 			time_counter=0
 #	return
 #	for j in range(0, enemies.get_child_count()):

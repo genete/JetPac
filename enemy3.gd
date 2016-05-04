@@ -14,7 +14,7 @@ var explosion= preload("res://explosion.tscn")
 func _ready():
 	randomize()
 	set_fixed_process(true)
-	var height=192-16-8
+	var height=192-16-8-32
 	var width=256
 	velocity=Vector2(HORIZONTAL_VELOCITY, VERTICAL_VELOCITY).rotated(direction)
 	var sprite_width=get_node("Sprite").get_texture().get_width()
