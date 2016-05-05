@@ -7,7 +7,7 @@ extends Node2D
 
 var current_wave=1
 var current_enemy=1
-const TOTAL_ENEMIES_TYPES=7
+const TOTAL_ENEMIES_TYPES=8
 const MAX_WAVES_PER_SHIP=3
 var enabled_enemies=true
 var enemies_scenes={
@@ -17,7 +17,8 @@ var enemies_scenes={
 4: preload("enemy4.tscn"),
 5: preload("enemy5.tscn"),
 6: preload("enemy6.tscn"),
-7: preload("enemy7.tscn")
+8: preload("enemy7.tscn"),
+7: preload("enemy8.tscn")
 }
 const MAX_ENEMIES_COUNT=4
 const HOLD_SPAWN_ENEMIES=0.5
