@@ -1,4 +1,4 @@
-##### ENEMY 1
+##### ENEMY 7
 extends KinematicBody2D
 
 const HORIZONTAL_VELOCITY=40
@@ -42,6 +42,9 @@ func _fixed_process(delta):
 		set_pos(pos+Vector2(right_limit,0))
 	elif(pos.x > right_limit):
 		set_pos(pos-Vector2(right_limit, 0))
+	if pos.x < left_limit-64 or pos.x >right_limit + 64 or pos.y < 0 or pos.y > 192:
+			destroy(false)
+
 		
 func destroy(var animate):
 	velocity=Vector2(0,0)

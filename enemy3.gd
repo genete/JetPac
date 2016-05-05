@@ -17,8 +17,7 @@ func _ready():
 	var height=192-16-8-32
 	var width=256
 	velocity=Vector2(HORIZONTAL_VELOCITY, VERTICAL_VELOCITY).rotated(direction)
-	var sprite_width=get_node("Sprite").get_texture().get_width()
-	set_pos(Vector2(-sprite_width, randf()*height+16))
+	set_pos(Vector2(-16, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
 	get_node("Sprite").set_modulate(colors[randi()%colors.size()+1])
 
@@ -51,10 +50,12 @@ func _fixed_process(delta):
 	var pos=get_pos()
 	var right_limit=256
 	var left_limit=0
-	if(pos.x < left_limit):
+	if(pos.x < left_limit-16):
 		set_pos(pos+Vector2(right_limit,0))
 	elif(pos.x > right_limit):
 		set_pos(pos-Vector2(right_limit, 0))
+	if pos.x < left_limit-64 or pos.x >right_limit + 64 or pos.y < 0 or pos.y > 192:
+			destroy(false)
 	change_direction()
 		
 func destroy(var animate):

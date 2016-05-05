@@ -17,11 +17,10 @@ func _ready():
 	if s==0:
 		s=-1
 	velocity=Vector2(HORIZONTAL_VELOCITY*s, VERTICAL_VELOCITY*s)
-	var sprite_width=get_node("Sprite").get_texture().get_width()
 	if s == 1:
-		set_pos(Vector2(-sprite_width, randf()*height+16))
+		set_pos(Vector2(-16, randf()*height+16))
 	else:
-		set_pos(Vector2(width+sprite_width, randf()*height+16))
+		set_pos(Vector2(width, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
 	get_node("Sprite").set_modulate(colors[randi()%colors.size()+1])
 
@@ -32,6 +31,11 @@ func _fixed_process(delta):
 	move(motion)
 	if(is_colliding()):
 		var collider=get_collider()
+		if(collider.get_name()=="laser_body"):
+			destroy(true)
+		if collider.has_method("destroy"):
+			collider.destroy(true)
+			destroy(true)
 		var n=get_collision_normal()
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
@@ -40,18 +44,18 @@ func _fixed_process(delta):
 		var angle=current_vel.angle_to(n)
 		current_vel=current_vel.rotated(2*angle)
 		velocity=current_vel
-		if(collider.get_name()=="laser_body"):
-			destroy(true)
-		if collider.has_method("destroy"):
-			collider.destroy(true)
+
 	var pos=get_pos()
 	var right_limit=256
 	var left_limit=0
-	if(pos.x < left_limit):
+	if(pos.x < left_limit-16):
 		set_pos(pos+Vector2(right_limit,0))
 	elif(pos.x > right_limit):
 		set_pos(pos-Vector2(right_limit, 0))
-		
+	if pos.x < left_limit-64 or pos.x >right_limit + 64 or pos.y < 0 or pos.y > 192:
+			destroy(false)
+
+
 func destroy(var animate):
 	velocity=Vector2(0,0)
 	if animate:
