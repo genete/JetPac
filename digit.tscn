@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://images/digits.png" type="Texture" id=1]
+[ext_resource path="res://digit.gd" type="Script" id=2]
+
+[node name="Digit" type="Sprite"]
+
+texture = ExtResource( 1 )
+centered = false
+hframes = 10
+modulate = Color( 1, 1, 0, 1 )
+script/script = ExtResource( 2 )
+
+

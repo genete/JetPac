@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=1]
+[gd_scene load_steps=25 format=1]
 
 [ext_resource path="res://level.gd" type="Script" id=1]
 [ext_resource path="res://images/platform1.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://images/ship.png" type="Texture" id=7]
 [ext_resource path="res://flames.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://number.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -423,6 +424,10 @@ collision/margin = 0.08
 transform/pos = Vector2( 150, 164 )
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="Number_left" parent="." instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 8, 8 )
 
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 

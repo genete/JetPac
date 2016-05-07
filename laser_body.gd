@@ -27,6 +27,12 @@ func _fixed_process(delta):
 		velocity=0
 		queue_free()
 		var collider=get_collider()
+		if collider.has_method("get_points"):
+			var points=collider.get_points()
+			if collider.has_user_signal("enemy_died"):
+				collider.emit_signal("enemy_died", points)
+			else:
+				print("no signal")
 		if collider.has_method("destroy"):
 			collider.destroy(true)
 	if total_motion.length() > 200:

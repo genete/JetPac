@@ -12,6 +12,8 @@ var launched=false
 var found=false
 var starting_pos=Vector2()
 
+signal enemy_died(p)
+
 func _ready():
 	randomize()
 	set_fixed_process(true)
@@ -29,7 +31,8 @@ func _ready():
 		starting_pos=Vector2(width-sprite_width, randf()*height+16)
 	set_pos(starting_pos)
 	get_node("Sprite").set_modulate(colors[randi()%colors.size()+1])
-
+	add_user_signal("enemy_died")
+	connect("enemy_died", get_node("/root/World"), "_callback_enemy_died")
 
 func _fixed_process(delta):
 	var motion
@@ -76,3 +79,6 @@ func destroy(var animate):
 		exp_instance.set_pos(get_pos()+Vector2(8, 8))
 		exp_instance.get_node("anim").play("explode")
 	queue_free()
+
+func get_points():
+	return 20

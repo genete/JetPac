@@ -11,6 +11,8 @@ const DEG45=PI/4
 var counter=0
 var explosion= preload("res://explosion.tscn")
 
+signal enemy_died(p)
+
 func _ready():
 	randomize()
 	set_fixed_process(true)
@@ -19,6 +21,8 @@ func _ready():
 	velocity=Vector2(HORIZONTAL_VELOCITY, VERTICAL_VELOCITY).rotated(direction)
 	set_pos(Vector2(-16, randf()*height+16))
 	get_node("Sprite").set_modulate(colors[randi()%colors.size()+1])
+	add_user_signal("enemy_died")
+	connect("enemy_died", get_node("/root/World"), "_callback_enemy_died")
 
 
 func _fixed_process(delta):
@@ -74,3 +78,6 @@ func change_direction():
 		direction=direction
 	if c==2:
 		direction=direction+DEG45
+
+func get_points():
+	return 30

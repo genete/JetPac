@@ -7,6 +7,8 @@ var velocity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
 var explosion= preload("res://explosion.tscn")
 
+signal enemy_died(p)
+
 
 func _ready():
 	randomize()
@@ -23,6 +25,8 @@ func _ready():
 		set_pos(Vector2(width, randf()*height+16))
 	get_node("Sprite/anim").play("fly")
 	get_node("Sprite").set_modulate(colors[randi()%colors.size()+1])
+	add_user_signal("enemy_died")
+	connect("enemy_died", get_node("/root/World"), "_callback_enemy_died")
 
 
 func _fixed_process(delta):
@@ -64,3 +68,6 @@ func destroy(var animate):
 		exp_instance.set_pos(get_pos()+Vector2(8, 8))
 		exp_instance.get_node("anim").play("explode")
 	queue_free()
+
+func get_points():
+	return 10
