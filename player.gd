@@ -32,6 +32,8 @@ var disabled=false
 var counter=0
 var destroyed=false
 
+signal died
+
 
 func _ready():
 	set_fixed_process(true)
@@ -39,6 +41,8 @@ func _ready():
 	PS2D.body_add_collision_exception(get_node("../Ship/body01").get_rid(), get_rid())
 	PS2D.body_add_collision_exception(get_node("../Ship/body02").get_rid(), get_rid())
 	prepare_player()
+	add_user_signal("died")
+	connect("died", get_node("/root/World"), "_callback_player_died")
 
 func _fixed_process(delta):
 	if destroyed:
@@ -196,6 +200,7 @@ func destroy(var animate):
 				children[i].start_gravity()
 			children[i].show()
 	destroyed=true
+	emit_signal("died")
 	disable_player(true)
 	var exp_instance=explosion.instance()
 	get_parent().add_child(exp_instance)

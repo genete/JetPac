@@ -1,7 +1,8 @@
 
 extends Node2D
 
-var ndigits=6
+export(int, 1, 6) var ndigits=6
+export(Color) var color=Color(1,1,0)
 var number
 var digit_class=preload("res://digit.tscn")
 
@@ -23,6 +24,7 @@ func update_digits():
 		add_child(digit_instance)
 		digit_instance.set_pos(Vector2((ndigits-i-1)*8, 0))
 		digit_instance.parse(d)
+		digit_instance.modulate(color)
 		
 
 func set_number(var new_number):

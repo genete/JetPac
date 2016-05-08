@@ -15,4 +15,5 @@ func parse(var new_value):
 		value=0
 	set_frame(int(value))
 
-
+func modulate(c):
+	set_modulate(c)

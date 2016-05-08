@@ -8,24 +8,27 @@ const TOTAL_ENEMIES_TYPES=8
 const MAX_WAVES_PER_SHIP=3
 var enabled_enemies=true
 var enemies_scenes={
-1: preload("enemy1.tscn"),
+1: preload("enemy4.tscn"),
 2: preload("enemy2.tscn"),
 3: preload("enemy3.tscn"),
 4: preload("enemy4.tscn"),
 5: preload("enemy5.tscn"),
 6: preload("enemy6.tscn"),
-8: preload("enemy7.tscn"),
-7: preload("enemy8.tscn")
+7: preload("enemy7.tscn"),
+8: preload("enemy8.tscn")
 }
 const MAX_ENEMIES_COUNT=4
 const HOLD_SPAWN_ENEMIES=0.5
 var time_counter=0
 var points=0
+var hipoints=0
+var lives=3
 
 func _ready():
 	OS.set_window_size(Vector2(256, 192)*4)
 	OS.set_window_resizable(false)
 	set_process(true)
+	get_node("lives").set_number(lives)
 
 func spawn_enemies(total):
 	var enemy_scene=enemies_scenes[current_enemy]
@@ -107,5 +110,14 @@ func set_up_labels(var total):
 
 func _callback_enemy_died(var p):
 	points=points+p
+	if points>hipoints:
+		hipoints=points
 	print("Points ", points)
 	get_node("Number_left").set_number(points)
+	get_node("Number_center").set_number(hipoints)
+
+func _callback_player_died():
+	lives-=1
+	get_node("lives").set_number(lives)
+	if lives==0:
+		print ("GAME OVER")

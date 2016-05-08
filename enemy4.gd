@@ -50,7 +50,14 @@ func _fixed_process(delta):
 		move_to(starting_pos+Vector2(0, SINE_AMPLITUDE*sin(2*time)))
 		var space_state = get_world_2d().get_direct_space_state()
 		var player_global_pos=get_node("/root/World/Player").get_global_pos()
-		var result = space_state.intersect_ray( get_global_pos(), player_global_pos, [self, get_node("/root/World/Ship/body00"), get_node("/root/World/Ship/body01"), get_node("/root/World/Ship/body02")] )
+		var exclusion_array=[self, 
+			get_node("/root/World/Ship/body00"), 
+			get_node("/root/World/Ship/body01"), 
+			get_node("/root/World/Ship/body02"),
+			get_node("/root/world/Player/body01"),
+			get_node("/root/world/Player/body02")
+			]
+		var result = space_state.intersect_ray( get_global_pos(), player_global_pos, exclusion_array )
 		if (not result.empty()):
 			if result.collider and result.collider.get_name()=="Player":
 				found=true
