@@ -8,7 +8,7 @@ const TOTAL_ENEMIES_TYPES=8
 const MAX_WAVES_PER_SHIP=3
 var enabled_enemies=true
 var enemies_scenes={
-1: preload("enemy4.tscn"),
+1: preload("enemy1.tscn"),
 2: preload("enemy2.tscn"),
 3: preload("enemy3.tscn"),
 4: preload("enemy4.tscn"),

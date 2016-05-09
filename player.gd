@@ -2,13 +2,13 @@
 extends KinematicBody2D
 
 
-const GRAVITY = 200.0 # Pixels/second
+const GRAVITY = 800.0 # Pixels/second
 const WALK_MAX_SPEED = 80
 const ADDITIONAL_SPEED_ON_AIR = 20
 const MAX_VERTICAL_SPEED=100
 const THRESOLD=5
 const SECONDS_BEFORE_REVIVE=3
-const JET_FORCE = 250.0
+const JET_FORCE = 3000.0
 const BOUNCE_FACTOR=50
 
 
@@ -87,9 +87,13 @@ func _fixed_process(delta):
 	else:
 		velocity.x=0
 		new_anim="idle"
-	if (jet):
-		force=Vector2(0,-JET_FORCE)
+	if jet:
+		force+=Vector2(0,-JET_FORCE)
 		new_anim="flying"
+	elif velocity.y>MAX_VERTICAL_SPEED:
+		velocity.y=MAX_VERTICAL_SPEED
+	elif velocity.y< -MAX_VERTICAL_SPEED:
+		velocity.y=-MAX_VERTICAL_SPEED
 
 	if jet and not jetting and velocity.y==0:
 		var exp_instance=explosion.instance()
