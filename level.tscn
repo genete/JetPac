@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=1]
+[gd_scene load_steps=27 format=1]
 
 [ext_resource path="res://level.gd" type="Script" id=1]
 [ext_resource path="res://images/platform1.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://number.tscn" type="PackedScene" id=10]
 [ext_resource path="res://images/miniplayer.png" type="Texture" id=11]
+[ext_resource path="res://zxspectrum.fnt" type="Font" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -449,7 +450,53 @@ centered = false
 
 transform/pos = Vector2( 64, 0 )
 ndigits = 1
-color = Color( 1, 1, 0, 1 )
+color = Color( 1, 1, 1, 1 )
+
+[node name="1UP" type="Label" parent="."]
+
+margin/left = 24.0
+margin/right = 48.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 12 )
+text = "1UP"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="HI" type="Label" parent="."]
+
+margin/left = 128.0
+margin/right = 144.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+text = "HI"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="2UP" type="Label" parent="."]
+
+margin/left = 216.0
+margin/right = 240.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 12 )
+text = "2UP"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 
