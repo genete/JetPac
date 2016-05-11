@@ -1,0 +1,127 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://zxspectrum.fnt" type="Font" id=1]
+[ext_resource path="res://images/miniplayer.png" type="Texture" id=2]
+
+[node name="Header" type="Node2D"]
+
+[node name="1UP" type="Label" parent="."]
+
+margin/left = 24.0
+margin/right = 48.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+text = "1UP"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="HI" type="Label" parent="."]
+
+margin/left = 128.0
+margin/right = 144.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+text = "HI"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="2UP" type="Label" parent="."]
+
+margin/left = 216.0
+margin/right = 240.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+text = "2UP"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="1UP_POINTS" type="Label" parent="."]
+
+margin/left = 8.0
+margin/top = 8.0
+margin/right = 56.0
+margin/bottom = 16.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+text = "000000"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="HI_POINTS" type="Label" parent="."]
+
+margin/left = 112.0
+margin/top = 8.0
+margin/right = 160.0
+margin/bottom = 16.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+text = "000000"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="2UP_POINTS" type="Label" parent="."]
+
+margin/left = 200.0
+margin/top = 8.0
+margin/right = 248.0
+margin/bottom = 16.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+text = "000000"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="LIVES" type="Label" parent="."]
+
+margin/left = 64.0
+margin/right = 72.0
+margin/bottom = 8.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "3"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="lives_icon" type="Sprite" parent="."]
+
+transform/pos = Vector2( 72, 0 )
+texture = ExtResource( 2 )
+centered = false
+
+
