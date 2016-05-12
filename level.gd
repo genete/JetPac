@@ -29,6 +29,9 @@ func _ready():
 	OS.set_window_resizable(false)
 	set_process(true)
 	get_node("Header/LIVES").set_text(str(lives))
+	var global=get_node("/root/global")
+	hipoints=global.hi_points
+	update_points()
 
 func spawn_enemies(total):
 	var enemy_scene=enemies_scenes[current_enemy]
@@ -94,6 +97,9 @@ func _callback_enemy_died(var p):
 	if points>hipoints:
 		hipoints=points
 	print("Points ", points)
+	update_points()
+
+func update_points():
 	get_node("Header/1UP_POINTS").set_text(str(points).pad_zeros(6))
 	get_node("Header/HI_POINTS").set_text(str(hipoints).pad_zeros(6))
 
@@ -101,7 +107,10 @@ func _callback_player_died():
 	lives-=1
 	if lives<=0:
 		lives=0
+		get_node("Header/LIVES").set_text(str(lives))
 		print ("GAME OVER")
-		get_node("/root/global").player1_points=points
-		get_node("/root/global").hi_points=hipoints
+		var global=get_node("/root/global")
+		global.player1_points=points
+		global.hi_points=hipoints
+		global.goto_scene("res://main.tscn")
 	get_node("Header/LIVES").set_text(str(lives))
