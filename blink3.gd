@@ -1,28 +1,30 @@
 
 extends Node2D
 
-const INTERVAL=0.5
-var time=0
+var active
 
 func _ready():
 	activate(true)
 	pass
 
-func _process(delta):
-	time=time+delta
-	if(time>INTERVAL):
-		var zero=get_child(0)
-		var one=get_child(1)
-		var two=get_child(2)
-		if zero.is_hidden(): zero.show()
-		else: zero.hide()
-		if one.is_hidden(): one.show()
-		else: one.hide()
-		if two.is_hidden(): two.show()
-		else: two.hide()
-		time=0
 
 func activate(a):
-	set_process(a)
+	active=a
+	if not active:
+		get_child(0).show()
+		get_child(1).hide()
+		get_child(2).hide()
 
 
+
+func _on_TimerOn_timeout():
+	if not active: return
+	get_child(0).show()
+	get_child(1).hide()
+	get_child(2).hide()
+
+func _on_TimerOff_timeout():
+	if not active: return
+	get_child(0).hide()
+	get_child(1).show()
+	get_child(2).show()

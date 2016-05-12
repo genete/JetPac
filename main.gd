@@ -1,6 +1,9 @@
 
 extends Node2D
-
+var p1=true
+var p2=false
+var kb=true
+var kj=false
 
 func _ready():
 	var global=get_node("/root/global")
@@ -11,6 +14,8 @@ func _ready():
 	OS.set_window_size(Vector2(256, 192)*4)
 	OS.set_window_resizable(false)
 	set_process(true)
+	get_node("1PG").activate(true)
+	get_node("3KEY").activate(true)
 	pass
 
 func _process(delta):
@@ -20,9 +25,26 @@ func _process(delta):
 	var joy=Input.is_action_pressed("joystick")
 	var new_game=Input.is_action_pressed("new_game")
 	
-	if one_p:
-		
-		pass
+	if one_p: 
+		get_node("1PG").activate(true)
+		get_node("2PG").activate(false)
+		p1=true
+		p2=false
+	if two_p:
+		get_node("1PG").activate(false)
+		get_node("2PG").activate(true)
+		p1=false
+		p2=true
+	if keyb:
+		get_node("3KEY").activate(true)
+		get_node("4KEM").activate(false)
+		kb=true
+		kj=false
+	if joy:
+		get_node("3KEY").activate(false)
+		get_node("4KEM").activate(true)
+		kb=false
+		kj=true
 	
 	if new_game:
 		var global=get_node("/root/global")
