@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=1]
+[gd_scene load_steps=27 format=1]
 
 [ext_resource path="res://level.gd" type="Script" id=1]
 [ext_resource path="res://images/platform1.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://flames.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://header.tscn" type="PackedScene" id=10]
+[ext_resource path="res://zxspectrum.fnt" type="Font" id=11]
+[ext_resource path="res://pause.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -427,6 +429,27 @@ transform/pos = Vector2( 150, 164 )
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Header" parent="." instance=ExtResource( 10 )]
+
+[node name="Pause label" type="Label" parent="."]
+
+process/pause_mode = 2
+visibility/visible = false
+margin/left = 40.0
+margin/top = 184.0
+margin/right = 224.0
+margin/bottom = 192.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "PRESS SPACE TO CONTINUE"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script/script = ExtResource( 12 )
 
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 

@@ -66,6 +66,10 @@ func _process(delta):
 		if time_counter>HOLD_SPAWN_ENEMIES:
 			spawn_enemies(1)
 			time_counter=0
+	var pause = Input.is_action_pressed("pause")
+	if pause:
+		get_tree().set_pause(true)
+		get_node("Pause label").show()
 
 func destroy_enemies():
 	get_tree().call_group(2, "enemies", "destroy", false)
