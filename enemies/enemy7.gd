@@ -1,4 +1,4 @@
-##### ENEMY 1
+##### ENEMY 7
 extends KinematicBody2D
 
 const HORIZONTAL_VELOCITY=40

@@ -322,4 +322,3 @@ script/script = ExtResource( 11 )
 [connection signal="timeout" from="TimerOff" to="TimerOn" method="_on_TimerOff_timeout"]
 
 
-[editable path="Header"]
