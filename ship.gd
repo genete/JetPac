@@ -67,25 +67,20 @@ func prepare_ship(current_ship):
 	body00.get_node("ship_launch_pos").set_enable_monitoring(true)
 
 func next_ship():
-	print("next_ship()")
 	set_pos(Vector2(0,0))
 	current_ship+=1
-	print("current_ship=", current_ship)
 	if current_ship>4:
-		print("reset ship to 1")
 		current_ship=1
 	prepare_ship(current_ship)
 	get_node("../Player").prepare_player()
 
 func prepare_next_wave():
-	print("destroy enemies")
 	var world=get_node("/root/World")
 	world.disable_enemies()
 	world.destroy_enemies()
 	
 
 func next_wave():
-	print("ship.gd:next_wave")
 	var world=get_node("/root/World")
 	world.enable_enemies()
 	return world.next_wave()
@@ -119,7 +114,6 @@ func _process(delta):
 		area.connect("body_enter", self, "_on_fuel_body_enter")
 	# if assembled and full filled, blink the ship
 	if assembled and not remaining_fuel_units:
-#		print("assembled. remaining fuel = ",remaining_fuel_units)
 		counter+=delta
 		if counter>COUNTER_MAX and fuel_color==FUEL_COLOR:
 			fuel_color=COLOR_WHITE
@@ -162,7 +156,6 @@ func _process(delta):
 				current_wave=1
 			prepare_next_wave()
 			change_ship=next_wave()
-			print("ship.gd:process(): not player in ship. current_wave=", current_wave, "change ship ", change_ship)
 		if change_ship and not anim.is_playing():
 			fuel_level=0
 			assembled=false
@@ -209,7 +202,6 @@ func _on_body02_body_enter( body ):
 # PLAYER CROSSES LAUNCH POSITION
 func _on_ship_launch_pos_body_enter( body ):
 	if body extends ship_body_class:
-#		print("body extends ship body class: ", body.get_name())
 		var player=get_node("../Player")
 		if player.has_node("body01") or player.has_node("body02"):
 			player.remove_child(body)

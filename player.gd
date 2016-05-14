@@ -172,21 +172,14 @@ func _fixed_process(delta):
 	var right_limit=256-THRESOLD
 	var left_limit=THRESOLD
 	if walk_left and pos.x <= left_limit:
-		print("viewport.pos.x=", get_viewport_rect().pos.x)
-		print("left_limit=", left_limit)
-		print("walk left and pos.x=", pos.x)
 		set_pos(Vector2(right_limit, pos.y))
 	elif walk_right and pos.x >=right_limit:
-		print("viewport.end.x=", get_viewport_rect().end.x)
-		print("right_limit=", right_limit)
-		print("walk right and pos.x=", pos.x)
 		set_pos(Vector2(left_limit, pos.y))
 
 func prepare_player():
 	set_pos(get_node("../Player_pos").get_pos())
 
 func disable_player(var b):
-	print("disable player ", b)
 	disabled=b
 	get_node("CollisionShape2D").set_trigger(b)
 

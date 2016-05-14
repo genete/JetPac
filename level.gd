@@ -100,7 +100,6 @@ func _callback_enemy_died(var p):
 	points=points+p
 	if points>hipoints:
 		hipoints=points
-	print("Points ", points)
 	update_points()
 
 func update_points():
