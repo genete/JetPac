@@ -1,10 +1,10 @@
-##### ENEMY 5
+##### ENEMY 4
 extends KinematicBody2D
 
 const SINE_AMPLITUDE=10
 const VELOCITY=50
 var velocity=Vector2(0,0)
-var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
+var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1), 8:Color(1,1,1,1) }
 var direction=0
 var time=0
 var explosion= preload("res://explosion.tscn")

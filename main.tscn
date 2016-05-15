@@ -301,6 +301,22 @@ one_shot = true
 autostart = false
 script/script = ExtResource( 11 )
 
+[node name="6   HOW TO PLAY" type="Label" parent="."]
+
+margin/left = 56.0
+margin/top = 152.0
+margin/right = 224.0
+margin/bottom = 160.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 3 )
+text = "6   HOW  TO PLAY"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [connection signal="timeout" from="TimerOn" to="1PG" method="_on_TimerOn_timeout"]
 
 [connection signal="timeout" from="TimerOn" to="2PG" method="_on_TimerOn_timeout"]

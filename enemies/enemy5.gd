@@ -1,9 +1,9 @@
-##### ENEMY 4
+##### ENEMY 5
 extends KinematicBody2D
 
 const VELOCITY=50
 var velocity=Vector2(0,0)
-var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
+var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1), 8:Color(1,1,1,1) }
 var explosion= preload("res://explosion.tscn")
 var hunt_active=true
 const HUNTING_PAUSE=0.25

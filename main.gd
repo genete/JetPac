@@ -24,6 +24,7 @@ func _process(delta):
 	var keyb=Input.is_action_pressed("keyboard")
 	var joy=Input.is_action_pressed("joystick")
 	var new_game=Input.is_action_pressed("new_game")
+	var controls=Input.is_action_pressed("controls")
 	
 	if one_p: 
 		get_node("1PG").activate(true)
@@ -49,3 +50,7 @@ func _process(delta):
 	if new_game:
 		var global=get_node("/root/global")
 		global.goto_scene("res://level.tscn")
+	
+	if controls:
+		var global=get_node("/root/global")
+		global.goto_scene("res://how_to_play.tscn")

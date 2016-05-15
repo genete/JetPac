@@ -4,7 +4,7 @@ extends KinematicBody2D
 const HORIZONTAL_VELOCITY=40
 const VERTICAL_VELOCITY=40
 var velocity
-var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1) }
+var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1), 8:Color(1,1,1,1) }
 var explosion= preload("res://explosion.tscn")
 
 signal enemy_died(p)
