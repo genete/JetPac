@@ -112,7 +112,7 @@ func _process(delta):
 		fuel_instance.add_collision_exception_with(get_node("body02"))
 		var area=fuel_instance.get_node("fuel_area")
 		area.connect("body_enter", self, "_on_fuel_body_enter")
-	# if assembled and full filled, blink the ship
+			# if assembled and full filled, blink the ship
 	if assembled and not remaining_fuel_units:
 		counter+=delta
 		if counter>COUNTER_MAX and fuel_color==FUEL_COLOR:

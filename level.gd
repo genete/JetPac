@@ -17,12 +17,21 @@ var enemies_scenes={
 7: preload("enemies/enemy7.tscn"),
 8: preload("enemies/enemy8.tscn")
 }
+var player_class=preload("res://player.gd")
+var gems_scenes={
+1: preload("gems/gem1.tscn"),
+2: preload("gems/gem2.tscn"),
+3: preload("gems/gem3.tscn")
+}
 const MAX_ENEMIES_COUNT=4
 const HOLD_SPAWN_ENEMIES=0.5
 var time_counter=0
 var points=0
 var hipoints=0
 var lives=3
+
+var gems_time_counter=0
+const GEMS_SPAWN_TIME=1
 
 func _ready():
 	OS.set_window_size(Vector2(256, 192)*4)
@@ -52,11 +61,20 @@ func spawn_enemies(total):
 			enemy_instance.add_collision_exception_with(get_node("Ship/body02"))
 		if get_node("Ship").has_node("Fuel"):
 			enemy_instance.add_collision_exception_with(get_node("Ship/Fuel"))
+		enemy_instance.add_collision_exception_with(get_node("Gems").get_child(0))
 		var children=enemies.get_child_count()
 		for j in range(0, children):
 			enemy_instance.add_collision_exception_with(enemies.get_child(j))
 
-
+func spawn_gem():
+	var gems=gems_scenes.size()
+	var selected=randi()%gems+1
+	print("selected ", selected)
+	var gem_instance=gems_scenes[selected].instance()
+	var area=gem_instance.get_node("gem_area")
+	get_node("Gems").add_child(gem_instance)
+	area.connect("body_enter", self, "_on_gem_body_enter")
+	pass
 
 func _process(delta):
 	var enemies=get_node("Enemies")
@@ -66,6 +84,14 @@ func _process(delta):
 		if time_counter>HOLD_SPAWN_ENEMIES:
 			spawn_enemies(1)
 			time_counter=0
+	var gems_node=get_node("Gems")
+	var gem_present=gems_node.get_child_count()>0
+	if not gem_present:
+		gems_time_counter+=delta
+		if gems_time_counter> GEMS_SPAWN_TIME:
+			spawn_gem()
+			gems_time_counter=0
+		
 	var pause = Input.is_action_pressed("pause")
 	if pause:
 		get_tree().set_pause(true)
@@ -95,12 +121,25 @@ func next_wave():
 func get_max_waves_per_ship():
 	return MAX_WAVES_PER_SHIP
 
+func _on_gem_body_enter(body):
+	if body extends player_class:
+		var gem_node=get_node("Gems").get_child(0)
+		var p=gem_node.get_points()
+		gem_node.queue_free()
+		increase_points(p)
+		pass
+	pass
 
 func _callback_enemy_died(var p):
+	increase_points(p)
+
+func increase_points(p):
 	points=points+p
 	if points>hipoints:
 		hipoints=points
 	update_points()
+
+
 
 func update_points():
 	get_node("Header/1UP_POINTS").set_text(str(points).pad_zeros(6))

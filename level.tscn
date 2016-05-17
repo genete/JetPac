@@ -101,8 +101,8 @@ input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 128, 8 )
 shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
+collision/layers = 2
+collision/mask = 0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
@@ -132,7 +132,7 @@ shapes/3/shape = SubResource( 5 )
 shapes/3/transform = Matrix32( 1, 0, 0, 1, 128, 188 )
 shapes/3/trigger = false
 collision/layers = 1
-collision/mask = 1
+collision/mask = 0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
@@ -197,7 +197,6 @@ _update_shape_index = 3
 [node name="Ship" type="Node2D" parent="."]
 
 script/script = ExtResource( 5 )
-__meta__ = { "_editor_collapsed":true }
 
 [node name="body00" type="KinematicBody2D" parent="Ship"]
 
@@ -206,8 +205,8 @@ input/pickable = false
 shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
+collision/layers = 64
+collision/mask = 129
 collision/margin = 0.001
 script/script = ExtResource( 6 )
 __meta__ = { "_editor_collapsed":true }
@@ -286,10 +285,11 @@ input/pickable = false
 shapes/0/shape = SubResource( 9 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
+collision/layers = 128
+collision/mask = 257
 collision/margin = 0.001
 script/script = ExtResource( 6 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite010" type="Sprite" parent="Ship/body01"]
 
@@ -341,10 +341,11 @@ input/pickable = false
 shapes/0/shape = SubResource( 11 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
-collision/layers = 1
+collision/layers = 256
 collision/mask = 1
 collision/margin = 0.001
 script/script = ExtResource( 6 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite020" type="Sprite" parent="Ship/body02"]
 
@@ -450,6 +451,8 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script/script = ExtResource( 12 )
+
+[node name="Gems" type="Node2D" parent="."]
 
 [connection signal="body_enter" from="Ship/body00/ship_launch_pos" to="Ship" method="_on_ship_launch_pos_body_enter"]
 

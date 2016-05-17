@@ -163,6 +163,8 @@ func _fixed_process(delta):
 			PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
 		else:
 			PS2D.body_add_collision_exception(li, get_node("body02").get_rid())
+		if(get_node("/root/World/Gems").get_child_count()):
+			PS2D.body_add_collision_exception(li, get_node("/root/World/Gems").get_child(0).get_rid())
 	
 	jetting=jet
 	shooting=shot
