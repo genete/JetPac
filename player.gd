@@ -37,9 +37,6 @@ signal died
 
 func _ready():
 	set_fixed_process(true)
-	PS2D.body_add_collision_exception(get_node("../Ship/body00").get_rid(), get_rid())
-	PS2D.body_add_collision_exception(get_node("../Ship/body01").get_rid(), get_rid())
-	PS2D.body_add_collision_exception(get_node("../Ship/body02").get_rid(), get_rid())
 	prepare_player()
 	add_user_signal("died")
 	connect("died", get_node("/root/World"), "_callback_player_died")
@@ -152,19 +149,6 @@ func _fixed_process(delta):
 			pos = pos-Vector2(2*lpos.x,0)
 		li.set_pos(pos)
 		get_parent().add_child(li)
-		PS2D.body_add_collision_exception(li, get_rid())
-		PS2D.body_add_collision_exception(li, get_node("../Ship/body00").get_rid())
-		if not has_node("body01"):
-			PS2D.body_add_collision_exception(li, get_node("../Ship/body01").get_rid())
-		else:
-			PS2D.body_add_collision_exception(li, get_node("body01").get_rid())
-		
-		if not has_node("body02"):
-			PS2D.body_add_collision_exception(li, get_node("../Ship/body02").get_rid())
-		else:
-			PS2D.body_add_collision_exception(li, get_node("body02").get_rid())
-		if(get_node("/root/World/Gems").get_child_count()):
-			PS2D.body_add_collision_exception(li, get_node("/root/World/Gems").get_child(0).get_rid())
 	
 	jetting=jet
 	shooting=shot

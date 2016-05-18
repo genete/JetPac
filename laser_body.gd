@@ -11,13 +11,7 @@ func _ready():
 	velocity_sign=velocity/abs(velocity)
 	var sprite=get_node("laser_sprite")
 	sprite.set_modulate(colors[randi()%7+1])
-	add_collision_exception_with(get_node("../Ship0/body00"))
-	add_collision_exception_with(get_node("../Ship0/body01"))
-	add_collision_exception_with(get_node("../Ship0/body02"))
-	if get_node("/root/World/Ship").has_node("Fuel"):
-		add_collision_exception_with(get_node("/root/World/Ship/Fuel"))
-	
-	
+
 
 func _fixed_process(delta):
 	var motion=Vector2(velocity, 0)*delta

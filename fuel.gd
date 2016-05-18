@@ -9,14 +9,9 @@ func _ready():
 	randomize()
 	set_fixed_process(true)
 	start_gravity()
-	add_collision_exception_with(get_node("../../roof"))
 	set_pos(Vector2(randf()*get_viewport_rect().size.x, -20))
 	get_node("fuel_sprite").set_modulate(Color(192.0/255, 0, 192.0/255, 1))
-	var enemies=get_node("/root/World/Enemies")
-	var children=enemies.get_child_count()
-	for j in range(0, children):
-		add_collision_exception_with(enemies.get_child(j))
-	
+
 
 func _fixed_process(delta):
 	var force = Vector2(0, gravity)

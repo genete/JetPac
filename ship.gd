@@ -46,9 +46,6 @@ func prepare_ship(current_ship):
 	body00.get_node("ship_launch_pos").set_enable_monitoring(false)
 	body01.get_node("area01").set_enable_monitoring(true)
 	body02.get_node("area02").set_enable_monitoring(false)
-	body00.add_collision_exception_with(body01)
-	body00.add_collision_exception_with(body02)
-	body01.add_collision_exception_with(body02)
 	body00.set_pos(get_node("body00_pos").get_pos())
 	body01.set_pos(get_node("body01_pos").get_pos())
 	body02.set_pos(get_node("body02_pos").get_pos())
@@ -106,10 +103,6 @@ func _process(delta):
 	if assembled and remaining_fuel_units>0 and not player_has_fuel and not ship_scene_has_fuel and not player_is_in_ship:
 		var fuel_instance=fuel_scene.instance()
 		add_child(fuel_instance)
-		fuel_instance.add_collision_exception_with(get_node("../Player"))
-		fuel_instance.add_collision_exception_with(get_node("body00"))
-		fuel_instance.add_collision_exception_with(get_node("body01"))
-		fuel_instance.add_collision_exception_with(get_node("body02"))
 		var area=fuel_instance.get_node("fuel_area")
 		area.connect("body_enter", self, "_on_fuel_body_enter")
 			# if assembled and full filled, blink the ship
@@ -208,11 +201,11 @@ func _on_ship_launch_pos_body_enter( body ):
 			add_child(body)
 			if body.get_name() == "body01":
 				body.get_node("area01").set_enable_monitoring(false)
-				get_node("body00").remove_collision_exception_with(get_node("body01"))
+				get_node("body00").set_collision_mask_bit(7, true) #Will collide with body01
 				get_node("body02/area02").set_enable_monitoring(true)
 			elif body.get_name()== "body02":
 				get_node("body02/area02").set_enable_monitoring(false)
-				get_node("body01").remove_collision_exception_with(get_node("body02"))
+				get_node("body01").set_collision_mask_bit(8,true) #Will collide with body02
 			var dis=body.get_pos()
 			body.set_pos(Vector2(get_node("body00").get_pos().x, player.get_pos().y+dis.y))
 			body.start_gravity()

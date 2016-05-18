@@ -49,22 +49,6 @@ func spawn_enemies(total):
 		var enemy_instance=enemy_scene.instance()
 		enemies.add_child(enemy_instance)
 		enemy_instance.add_to_group("enemies")
-#		enemy_instance.add_collision_exception_with(get_node("roof"))
-		enemy_instance.add_collision_exception_with(get_node("Ship/body00"))
-		if(get_node("Player").has_node("body01")):
-			enemy_instance.add_collision_exception_with(get_node("Player/body01"))
-		else:
-			enemy_instance.add_collision_exception_with(get_node("Ship/body01"))
-		if(get_node("Player").has_node("body02")):
-			enemy_instance.add_collision_exception_with(get_node("Player/body02"))
-		else:
-			enemy_instance.add_collision_exception_with(get_node("Ship/body02"))
-		if get_node("Ship").has_node("Fuel"):
-			enemy_instance.add_collision_exception_with(get_node("Ship/Fuel"))
-		enemy_instance.add_collision_exception_with(get_node("Gems").get_child(0))
-		var children=enemies.get_child_count()
-		for j in range(0, children):
-			enemy_instance.add_collision_exception_with(enemies.get_child(j))
 
 func spawn_gem():
 	var gems=gems_scenes.size()

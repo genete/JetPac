@@ -9,8 +9,7 @@ var first_time=true
 func _ready():
 	set_fixed_process(true)
 	start_gravity()
-	add_collision_exception_with(get_node("../../roof"))
-	
+
 
 func _fixed_process(delta):
 	var force = Vector2(0, gravity)

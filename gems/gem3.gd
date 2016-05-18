@@ -13,17 +13,8 @@ func _ready():
 	randomize()
 	set_fixed_process(true)
 	start_gravity()
-	add_collision_exception_with(get_node("/root/World/roof"))
 	set_pos(Vector2(randf()*256, -20))
-	var enemies=get_node("/root/World/Enemies")
-	var children=enemies.get_child_count()
-	add_collision_exception_with(get_node("/root/World/Player"))
-	add_collision_exception_with(get_node("/root/World/Ship/body00"))
-	add_collision_exception_with(get_node("/root/World/Ship/body01"))
-	add_collision_exception_with(get_node("/root/World/Ship/body02"))
-	add_collision_exception_with(get_node("/root/World/Ship/Fuel"))
 
-	
 
 func _fixed_process(delta):
 	var force = Vector2(0, gravity)
