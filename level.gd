@@ -31,7 +31,7 @@ var hipoints=0
 var lives=3
 
 var gems_time_counter=0
-const GEMS_SPAWN_TIME=1
+const GEMS_SPAWN_TIME=7
 
 func _ready():
 	OS.set_window_size(Vector2(256, 192)*4)

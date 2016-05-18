@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=1]
+[gd_scene load_steps=28 format=1]
 
 [ext_resource path="res://level.gd" type="Script" id=1]
 [ext_resource path="res://images/platform1.png" type="Texture" id=2]
@@ -8,10 +8,11 @@
 [ext_resource path="res://body.gd" type="Script" id=6]
 [ext_resource path="res://images/ship.png" type="Texture" id=7]
 [ext_resource path="res://flames.tscn" type="PackedScene" id=8]
-[ext_resource path="res://player.tscn" type="PackedScene" id=9]
-[ext_resource path="res://header.tscn" type="PackedScene" id=10]
-[ext_resource path="res://zxspectrum.fnt" type="Font" id=11]
-[ext_resource path="res://pause.gd" type="Script" id=12]
+[ext_resource path="res://launch_area.gd" type="Script" id=9]
+[ext_resource path="res://player.tscn" type="PackedScene" id=10]
+[ext_resource path="res://header.tscn" type="PackedScene" id=11]
+[ext_resource path="res://zxspectrum.fnt" type="Font" id=12]
+[ext_resource path="res://pause.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -209,7 +210,6 @@ collision/layers = 64
 collision/mask = 1
 collision/margin = 0.001
 script/script = ExtResource( 6 )
-__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite000" type="Sprite" parent="Ship/body00"]
 
@@ -266,6 +266,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+script/script = ExtResource( 9 )
 
 [node name="launch_shape" type="CollisionShape2D" parent="Ship/body00/launch_area"]
 
@@ -418,10 +419,9 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="Player" parent="." instance=ExtResource( 9 )]
+[node name="Player" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 130.154, 151.325 )
-collision/margin = 0.08
 
 [node name="Player_pos" type="Position2D" parent="."]
 
@@ -429,7 +429,7 @@ transform/pos = Vector2( 150, 164 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Header" parent="." instance=ExtResource( 10 )]
+[node name="Header" parent="." instance=ExtResource( 11 )]
 
 [node name="Pause label" type="Label" parent="."]
 
@@ -442,7 +442,7 @@ margin/bottom = 192.0
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
-custom_fonts/font = ExtResource( 11 )
+custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_as_outline = 1
 text = "PRESS SPACE TO CONTINUE"
@@ -450,7 +450,7 @@ valign = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script/script = ExtResource( 12 )
+script/script = ExtResource( 13 )
 
 [node name="Gems" type="Node2D" parent="."]
 

@@ -11,7 +11,6 @@ const SECONDS_BEFORE_REVIVE=3
 const JET_FORCE = 2000.0
 const BOUNCE_FACTOR=150
 
-
 var velocity = Vector2()
 var shooting = false
 var jetting=false
@@ -31,15 +30,18 @@ var explosion= preload("res://explosion.tscn")
 var disabled=false
 var counter=0
 var destroyed=false
+var shot_interval=0
 
 signal died
 
+var timer_node
 
 func _ready():
 	set_fixed_process(true)
 	prepare_player()
 	add_user_signal("died")
 	connect("died", get_node("/root/World"), "_callback_player_died")
+	timer_node=get_node("Timer")
 
 func _fixed_process(delta):
 	if destroyed:
@@ -108,7 +110,7 @@ func _fixed_process(delta):
 	elif velocity.y > MAX_VERTICAL_SPEED:
 		velocity.y=MAX_VERTICAL_SPEED
 
-		# Integrate velocity into motion and move
+	# Integrate velocity into motion and move
 	var motion = velocity*delta
 	
 	# Move and consume motion
@@ -149,9 +151,10 @@ func _fixed_process(delta):
 			pos = pos-Vector2(2*lpos.x,0)
 		li.set_pos(pos)
 		get_parent().add_child(li)
+		shooting=true
+		timer_node.start()
 	
 	jetting=jet
-	shooting=shot
 	
 	# Handle left and right screen limits 
 	var pos=get_pos()
@@ -193,3 +196,7 @@ func destroy(var animate):
 	get_node("/root/World").disable_enemies()
 	get_node("/root/World").destroy_enemies()
 	
+
+
+func _on_Timer_timeout():
+	shooting=false
