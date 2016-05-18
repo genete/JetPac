@@ -161,10 +161,10 @@ func _on_fuel_body_enter( body ):
 	if body extends player_class  and body.destroyed==false:
 		var fuel=get_node("Fuel")
 		var player=body
-		var dis=fuel.get_pos()-player.get_pos()
 		remove_child(fuel)
 		player.add_child(fuel)
-		fuel.set_pos(dis)
+		fuel.set_pos(Vector2())
+		fuel.velocity=Vector2()
 		fuel.stop_gravity()
 		fuel.add_to_group("attached")
 
@@ -173,10 +173,10 @@ func _on_body01_body_enter( body ):
 	if body extends player_class and body.destroyed==false:
 		var body01=get_node("body01")
 		var player=body
-		var dis=body01.get_pos()-player.get_pos()
 		remove_child(body01)
 		player.add_child(body01)
-		body01.set_pos(dis)
+		body01.set_pos(Vector2())
+		body01.velocity=Vector2()
 		body01.stop_gravity()
 		body01.add_to_group("attached")
 
@@ -185,10 +185,10 @@ func _on_body02_body_enter( body ):
 	if body extends player_class  and body.destroyed==false:
 		var body02=get_node("body02")
 		var player=body
-		var dis=body02.get_pos()-player.get_pos()
 		remove_child(body02)
 		player.add_child(body02)
-		body02.set_pos(dis)
+		body02.set_pos(Vector2())
+		body02.velocity=Vector2()
 		body02.stop_gravity()
 		body02.add_to_group("attached")
 

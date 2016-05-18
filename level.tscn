@@ -138,7 +138,6 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-__meta__ = { "_editor_collapsed":true }
 
 [node name="platform1" type="Sprite" parent="Platforms"]
 
@@ -210,6 +209,7 @@ collision/layers = 64
 collision/mask = 1
 collision/margin = 0.001
 script/script = ExtResource( 6 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="sprite000" type="Sprite" parent="Ship/body00"]
 

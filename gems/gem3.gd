@@ -6,8 +6,6 @@ var velocity = Vector2()
 var gravity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1), 8:Color(1,1,1,1) }
 var current_color=1
-var timer=0
-const TIME_OUT=0.15
 
 func _ready():
 	randomize()

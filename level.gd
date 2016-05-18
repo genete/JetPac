@@ -21,7 +21,9 @@ var player_class=preload("res://player.gd")
 var gems_scenes={
 1: preload("gems/gem1.tscn"),
 2: preload("gems/gem2.tscn"),
-3: preload("gems/gem3.tscn")
+3: preload("gems/gem3.tscn"),
+4: preload("gems/gem4.tscn"),
+5: preload("gems/gem5.tscn")
 }
 const MAX_ENEMIES_COUNT=4
 const HOLD_SPAWN_ENEMIES=0.5

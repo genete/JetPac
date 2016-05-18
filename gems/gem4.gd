@@ -1,4 +1,4 @@
-#GEM 2
+# GEM 4
 extends KinematicBody2D
 
 const GRAVITY = 50.0 
@@ -6,6 +6,8 @@ var velocity = Vector2()
 var gravity
 var colors={ 1:Color(1,0,0,1), 2:Color(0,1,0,1), 3:Color(0,0,1,1), 4:Color(1, 1, 1, 1), 5:Color(1, 1, 0, 1), 6: Color(1, 0, 1, 1), 7: Color(0,1, 1, 1), 8:Color(1,1,1,1) }
 var current_color=1
+var timer=0
+const TIME_OUT=0.25
 
 func _ready():
 	randomize()
@@ -35,7 +37,17 @@ func _fixed_process(delta):
 		set_pos(pos+Vector2(right_limit,0))
 	elif(pos.x > right_limit):
 		set_pos(pos-Vector2(right_limit, 0))
+	process_animation(delta)
 
+# Process animation
+func process_animation(delta):
+	timer=timer+delta
+	if timer>TIME_OUT:
+		if is_hidden():
+			show()
+		else:
+			hide()
+		timer=0
 
 
 func stop_gravity():
