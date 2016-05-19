@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=22 format=1]
 
 [ext_resource path="res://how_to_play.gd" type="Script" id=1]
 [ext_resource path="res://Enemies.gd" type="Script" id=2]
@@ -11,11 +11,16 @@
 [ext_resource path="res://enemies/enemy7.tscn" type="PackedScene" id=9]
 [ext_resource path="res://enemies/enemy8.tscn" type="PackedScene" id=10]
 [ext_resource path="res://zxspectrum.fnt" type="Font" id=11]
-[ext_resource path="res://player_sprite.tscn" type="PackedScene" id=12]
-[ext_resource path="res://laser_sprite.tscn" type="PackedScene" id=13]
-[ext_resource path="res://ship_sprite.tscn" type="PackedScene" id=14]
-[ext_resource path="res://images/fuel.png" type="Texture" id=15]
-[ext_resource path="res://arrow.gd" type="Script" id=16]
+[ext_resource path="res://Gems.gd" type="Script" id=12]
+[ext_resource path="res://gems/gem1.tscn" type="PackedScene" id=13]
+[ext_resource path="res://gems/gem2.tscn" type="PackedScene" id=14]
+[ext_resource path="res://gems/gem3.tscn" type="PackedScene" id=15]
+[ext_resource path="res://gems/gem4.tscn" type="PackedScene" id=16]
+[ext_resource path="res://gems/gem5.tscn" type="PackedScene" id=17]
+[ext_resource path="res://player_sprite.tscn" type="PackedScene" id=18]
+[ext_resource path="res://laser_sprite.tscn" type="PackedScene" id=19]
+[ext_resource path="res://images/ship_assembly.png" type="Texture" id=20]
+[ext_resource path="res://images/fuel_fill.png" type="Texture" id=21]
 
 [node name="How_to_play" type="Node2D"]
 
@@ -23,40 +28,48 @@ script/script = ExtResource( 1 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
+transform/pos = Vector2( 10, 12 )
 script/script = ExtResource( 2 )
 __meta__ = { "_editor_collapsed":true }
 
 [node name="enemy1" parent="Enemies" instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 22, 22 )
+transform/pos = Vector2( 0, 0 )
 collision/margin = 0.08
 
 [node name="enemy2" parent="Enemies" instance=ExtResource( 4 )]
 
+transform/pos = Vector2( 24, 0 )
 collision/margin = 0.08
 
 [node name="enemy3" parent="Enemies" instance=ExtResource( 5 )]
 
+transform/pos = Vector2( 48, 0 )
 collision/margin = 0.08
 
 [node name="enemy4" parent="Enemies" instance=ExtResource( 6 )]
 
+transform/pos = Vector2( 72, 4 )
 collision/margin = 0.08
 
 [node name="enemy5" parent="Enemies" instance=ExtResource( 7 )]
 
+transform/pos = Vector2( 0, 26 )
 collision/margin = 0.08
 
 [node name="enemy6" parent="Enemies" instance=ExtResource( 8 )]
 
+transform/pos = Vector2( 24, 24 )
 collision/margin = 0.08
 
 [node name="enemy7" parent="Enemies" instance=ExtResource( 9 )]
 
+transform/pos = Vector2( 48, 24 )
 collision/margin = 0.08
 
 [node name="enemy8" parent="Enemies" instance=ExtResource( 10 )]
 
+transform/pos = Vector2( 72, 24 )
 collision/margin = 0.08
 
 [node name="enemy1_pos" type="Position2D" parent="Enemies"]
@@ -86,7 +99,7 @@ transform/scale = Vector2( 0.8, 0.8 )
 
 [node name="enemy6_pos" type="Position2D" parent="Enemies"]
 
-transform/pos = Vector2( 32, 32 )
+transform/pos = Vector2( 32.2628, 32 )
 transform/scale = Vector2( 0.8, 0.8 )
 
 [node name="enemy7_pos" type="Position2D" parent="Enemies"]
@@ -116,9 +129,81 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Jet" parent="." instance=ExtResource( 12 )]
+[node name="Gems" type="Node2D" parent="."]
 
-transform/pos = Vector2( 136, 88 )
+transform/pos = Vector2( 10, 12 )
+script/script = ExtResource( 12 )
+__meta__ = { "_editor_collapsed":true }
+
+[node name="Gem1" parent="Gems" instance=ExtResource( 13 )]
+
+transform/pos = Vector2( 128, 8 )
+collision/margin = 0.08
+
+[node name="Gem2" parent="Gems" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 154, 8 )
+collision/margin = 0.08
+
+[node name="Gem3" parent="Gems" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 112, 24 )
+collision/margin = 0.08
+
+[node name="Gem4" parent="Gems" instance=ExtResource( 16 )]
+
+transform/pos = Vector2( 138, 24 )
+collision/margin = 0.08
+
+[node name="Gem5" parent="Gems" instance=ExtResource( 17 )]
+
+transform/pos = Vector2( 164, 24 )
+collision/margin = 0.08
+
+[node name="Gem1_pos" type="Position2D" parent="Gems"]
+
+transform/pos = Vector2( 128, 8 )
+transform/scale = Vector2( 0.8, 0.8 )
+
+[node name="Gem2_pos" type="Position2D" parent="Gems"]
+
+transform/pos = Vector2( 154, 8 )
+transform/scale = Vector2( 0.8, 0.8 )
+
+[node name="Gem3_pos" type="Position2D" parent="Gems"]
+
+transform/pos = Vector2( 112, 24 )
+transform/scale = Vector2( 0.8, 0.8 )
+
+[node name="Gem4_pos" type="Position2D" parent="Gems"]
+
+transform/pos = Vector2( 138, 24 )
+transform/scale = Vector2( 0.8, 0.8 )
+
+[node name="Gem5_pos" type="Position2D" parent="Gems"]
+
+transform/pos = Vector2( 164, 24 )
+transform/scale = Vector2( 0.8, 0.8 )
+
+[node name="Label" type="Label" parent="Gems"]
+
+margin/left = 112.0
+margin/top = 48.0
+margin/right = 168.0
+margin/bottom = 56.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 11 )
+text = "COLLECT"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Jet" parent="." instance=ExtResource( 18 )]
+
+transform/pos = Vector2( 146, 100 )
 
 [node name="Up  Cursor" type="Label" parent="Jet"]
 
@@ -137,9 +222,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Right" parent="." instance=ExtResource( 12 )]
+[node name="Right" parent="." instance=ExtResource( 18 )]
 
-transform/pos = Vector2( 24, 88 )
+transform/pos = Vector2( 34, 100 )
 
 [node name="Right Cursor" type="Label" parent="Right"]
 
@@ -158,9 +243,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Left" parent="." instance=ExtResource( 12 )]
+[node name="Left" parent="." instance=ExtResource( 18 )]
 
-transform/pos = Vector2( 80, 88 )
+transform/pos = Vector2( 90, 100 )
 flip_h = true
 
 [node name="Left Cursor" type="Label" parent="Left"]
@@ -180,9 +265,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Laser" parent="." instance=ExtResource( 12 )]
+[node name="Laser" parent="." instance=ExtResource( 18 )]
 
-transform/pos = Vector2( 64, 144 )
+transform/pos = Vector2( 74, 156 )
 
 [node name="Space" type="Label" parent="Laser"]
 
@@ -205,40 +290,19 @@ max_lines_visible = -1
 
 transform/pos = Vector2( 10.4358, -2.07181 )
 
-[node name="laser_sprite" parent="Laser/pos" instance=ExtResource( 13 )]
+[node name="laser_sprite" parent="Laser/pos" instance=ExtResource( 19 )]
 
 transform/pos = Vector2( 0, 0 )
 frame = 0
 
-[node name="Ship" parent="." instance=ExtResource( 14 )]
+[node name="Ship Assembly" type="Sprite" parent="."]
 
-transform/pos = Vector2( 176, 48 )
+transform/pos = Vector2( 216, 144 )
+texture = ExtResource( 20 )
 
-[node name="FILL" type="Label" parent="Ship"]
+[node name="Fuel fill" type="Sprite" parent="."]
 
-margin/left = -8.0
-margin/top = 56.0
-margin/right = 24.0
-margin/bottom = 64.0
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-custom_fonts/font = ExtResource( 11 )
-text = "FILL"
-valign = 2
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Fuel" type="Sprite" parent="."]
-
-transform/pos = Vector2( 184, 29 )
-texture = ExtResource( 15 )
-modulate = Color( 0.828125, 0, 0.752941, 0.752941 )
-region = true
-region_rect = Rect2( 0, 0, 16, 11 )
-script/script = ExtResource( 16 )
-
-[node name="Sprite" type="Sprite" parent="."]
+transform/pos = Vector2( 216, 58 )
+texture = ExtResource( 21 )
 
 
