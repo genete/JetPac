@@ -4,6 +4,8 @@ var p1=true
 var p2=false
 var kb=true
 var kj=false
+var counter=0
+const CONTROLS_TIMEOUT=10
 
 func _ready():
 	var global=get_node("/root/global")
@@ -25,6 +27,10 @@ func _process(delta):
 	var joy=Input.is_action_pressed("joystick")
 	var new_game=Input.is_action_pressed("new_game")
 	var controls=Input.is_action_pressed("controls")
+	counter+=delta
+	if counter > CONTROLS_TIMEOUT:
+		controls=true
+		counter=0
 	
 	if one_p: 
 		get_node("1PG").activate(true)

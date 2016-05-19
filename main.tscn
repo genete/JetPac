@@ -303,6 +303,7 @@ script/script = ExtResource( 11 )
 
 [node name="6   HOW TO PLAY" type="Label" parent="."]
 
+visibility/visible = false
 margin/left = 56.0
 margin/top = 152.0
 margin/right = 224.0
